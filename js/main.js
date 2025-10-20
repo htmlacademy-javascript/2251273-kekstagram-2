@@ -53,7 +53,7 @@ const createComment = (numberComents) => {
   return comment;
 };
 
-// Функция генерации коментариев
+// Функция генерации комментариев
 const createComments = (number) => {
   const getIdComment = getRandomNumber(1, number);
   const comments = Array.from({ length: number }, () => createComment(getIdComment()));
@@ -61,7 +61,7 @@ const createComments = (number) => {
 };
 
 
-// функция генерации случайного id карточки
+// Функция генерации случайного id карточки
 function getRandomNumber(min, max) {
   const cache = [];
   function inner() {
@@ -76,7 +76,7 @@ function getRandomNumber(min, max) {
   return inner;
 }
 
-// функция создания карточки
+// Функция создания карточки
 const createCard = () => {
   const idCard = getIdCard();
   const numberComents = getRandomInt(numberOfComments.MIN, numberOfComments.MAX);
