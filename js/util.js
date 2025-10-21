@@ -8,6 +8,9 @@ function getRandomNumber(min, max) {
   const cache = [];
   function inner() {
     const id = getRandomInt(min, max);
+    if (cache.length === max - min + 1) {
+      return null;
+    }
     if (cache.includes(id)) {
       return inner();
     } else {
