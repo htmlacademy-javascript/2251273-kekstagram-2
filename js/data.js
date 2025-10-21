@@ -1,4 +1,4 @@
-// Генератор данных
+// Модуль генерации данных
 // Импорт
 import { getRandomInt, getRandomNumber } from './util.js';
 
