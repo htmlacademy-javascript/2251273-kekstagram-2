@@ -3,22 +3,22 @@
 import { getRandomInt } from './function.js';
 
 // константы лайков
-const numberOfLikes = {
+const NumberOfLikes = {
   MIN: 15,
   MAX: 200,
 };
 // константы комментариев
-const numberOfComments = {
+const NumberOfComments = {
   MIN: 0,
   MAX: 30,
 };
 // константы количества карточек
-const numberOfCards = {
+const NumberOfCards = {
   MIN: 1,
   MAX: 25,
 };
 // константы количества аватаров
-const numberOfAvatars = {
+const NumberOfAvatars = {
   MIN: 1,
   MAX: 6,
 };
@@ -39,14 +39,14 @@ const NAMES = ['Артём', 'Анастасия', 'Михаил', 'Татьян
 const DESCRIPTIONS = ['Увлекаюсь фотографированием!', 'Моя первая работа!', 'Старался', 'Могло бы быть лучше((','Достойный ракурс))'];
 
 // Счетчик id, лайков
-const getIdCard = getRandomNumber(numberOfCards.MIN, numberOfCards.MAX);
-const getCounterLikes = getRandomNumber(numberOfLikes.MIN, numberOfLikes.MAX);
+const getIdCard = getRandomNumber(NumberOfCards.MIN, NumberOfCards.MAX);
+const getCounterLikes = getRandomNumber(NumberOfLikes.MIN, NumberOfLikes.MAX);
 
 // Функция генерации случайного комментария
 const createComment = (numberComents) => {
   const comment = {
     id: numberComents,
-    avatar: `img/avatar-${numberComents % numberOfAvatars.MAX + 1}.svg`,
+    avatar: `img/avatar-${numberComents % NumberOfAvatars.MAX + 1}.svg`,
     message: MESSAGES[getRandomInt(0, MESSAGES.length - 1)],
     name: NAMES[getRandomInt(0, NAMES.length - 1)],
   };
@@ -61,7 +61,7 @@ const createComments = (number) => {
 };
 
 
-// Функция генерации случайного id карточки
+// Функция генерации числа из заданного диапазона
 function getRandomNumber(min, max) {
   const cache = [];
   function inner() {
@@ -79,7 +79,7 @@ function getRandomNumber(min, max) {
 // Функция создания карточки
 const createCard = () => {
   const idCard = getIdCard();
-  const numberComents = getRandomInt(numberOfComments.MIN, numberOfComments.MAX);
+  const numberComents = getRandomInt(NumberOfComments.MIN, NumberOfComments.MAX);
   const card = {
     id: idCard,
     url: `photos/${idCard}.jpg`,
@@ -91,7 +91,7 @@ const createCard = () => {
 };
 
 // создание массива карточек
-const createCards = Array.from({ length: numberOfCards.MAX }, createCard);
+const createCards = Array.from({ length: NumberOfCards.MAX }, createCard);
 
 
 export { createCards };
