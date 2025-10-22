@@ -2,4 +2,6 @@
 // Импорт
 import { createCards } from './data.js';
 
-createCards();
+const cards = createCards();
+
+export { cards };

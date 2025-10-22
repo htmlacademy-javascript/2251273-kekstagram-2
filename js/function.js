@@ -1,11 +1,11 @@
 // Модуль функции
 
 // Функция извлечения цифр
-const strToNumber = (str = '') => Number(str.split('').filter((item) => /[0-9]/.test(item)).join(''));
+const strToNumber = (str = '') => str.split('').filter((item) => /[0-9]/.test(item)).join('');
 
 // Функция конвертации времени в минуты
 const timeConvert = (time) => {
-  let [hours, minutes] = time.split(':').map((el) => strToNumber(el));
+  let [hours, minutes] = time.split(':').map((el) => Number(strToNumber(el)));
   hours = hours < 24 ? hours : undefined;
   minutes = minutes < 60 ? minutes : undefined;
   return (hours * 60) + minutes;
@@ -33,7 +33,7 @@ const checkArrangeMeeting = (startWorking = '00:00', endWorking = '00:00', start
 
 };
 
-checkArrangeMeeting('8:00', '17:3kl0', '17:20', 10); // true
+checkArrangeMeeting('8:00', '17:30', '17:0fg20', 10); // true
 checkArrangeMeeting('8:0', '10:0', '8:0', 120);// true
 checkArrangeMeeting('08:00', '14:30', '14:00', 90);// false
 checkArrangeMeeting('14:00', '17:30', '08:0', 90);// false
