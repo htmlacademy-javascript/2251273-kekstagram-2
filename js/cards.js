@@ -1,4 +1,8 @@
 //Модуль отрисовки карточек
+// Импорт
+import { onCardClick } from './big-picture.js';
+
+// Константы
 const сardsСontainer = document.querySelector('.pictures');
 const cardTemplate = document.querySelector('#picture').content.querySelector('.picture');
 const fragment = document.createDocumentFragment();
@@ -11,10 +15,12 @@ const renderCard = (card) => {
   const cardComments = cardElement.querySelector('.picture__comments');
   const cardLikes = cardElement.querySelector('.picture__likes');
 
-  cardPicture.src = card.url; //Адрес изображения
-  cardPicture.alt = card.description; //Описание изображения
-  cardComments.textContent = card.comments.length;//Количество комментариев
-  cardLikes.textContent = card.likes;//Количество лайков
+  cardPicture.src = card.url;
+  cardPicture.alt = card.description;
+  cardComments.textContent = card.comments.length;
+  cardLikes.textContent = card.likes;
+
+  onCardClick(cardElement, card);
 
   fragment.appendChild(cardElement);
 
