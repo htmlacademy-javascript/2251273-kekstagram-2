@@ -1,4 +1,4 @@
-// Модуль отрисовки коментариев
+// модуль отрисовки комментариев
 // Константы
 const picture = document.querySelector('.big-picture');
 const socialCommentsList = picture.querySelector('.social__comments');

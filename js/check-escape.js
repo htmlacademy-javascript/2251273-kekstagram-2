@@ -24,5 +24,5 @@ const onEscapeKey = (evt) => {
   }
 };
 
-
+// Экспорт
 export { onEscapeKey };
