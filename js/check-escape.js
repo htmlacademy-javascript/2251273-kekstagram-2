@@ -1,7 +1,9 @@
 // Модуль проверки нажатия клавиши Ecape
 // Импорт
 import { closeBigPicture } from './big-picture.js';
+import { removeLoaderClick } from './coments.js';
 
+// Проверка статуса большого изображения
 const StatusBigPicture = document.querySelector('.big-picture').matches('.hidden');
 
 
@@ -17,6 +19,7 @@ const onEscapeKey = (evt) => {
     //Закрытие большого изображения
     if (StatusBigPicture) {
       closeBigPicture();
+      removeLoaderClick();
     }
   }
 };

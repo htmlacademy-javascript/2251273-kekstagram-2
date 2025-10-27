@@ -1,13 +1,19 @@
 // Модуль отрисовки коментариев
-
+// Константы
 const picture = document.querySelector('.big-picture');
 const socialCommentsList = picture.querySelector('.social__comments');
-// const socialCommentCount = picture.querySelector('.social__comment-count');
-// const commentsLoader = picture.querySelector('.comments-loader');
+const commentsLoader = picture.querySelector('.comments-loader');
 const commentsShownCount = picture.querySelector('.social__comment-shown-count');
 const commentsTotalCount = picture.querySelector('.social__comment-total-count');
 
+const Comments = {
+  TOTAL: 0,
+  SHOWN: 0,
+  STEP: 5,
+  COMMENTS: [],
+};
 
+// Функция отрисовки комментария
 const renderComent = (comment) => {
   const fragment = document.createDocumentFragment();
   const commentItem = document.createElement('li');
@@ -29,15 +35,63 @@ const renderComent = (comment) => {
   return fragment;
 };
 
-
-const rensderComments = (comments) => {
-  socialCommentsList.innerHTML = '';
-  comments.forEach((comment) => {
-    socialCommentsList.append(renderComent(comment));
-    commentsShownCount.textContent = socialCommentsList.children.length;
-    commentsTotalCount.textContent = comments.length;
-  });
-
+// Функция проверки кнопки загрузки
+const checkButtonLoader = () => {
+  if (Comments.TOTAL > Comments.SHOWN) {
+    commentsLoader.classList.remove('hidden');
+  } else {
+    commentsLoader.classList.add('hidden');
+  }
 };
 
-export { rensderComments };
+// Функция отрисовки количества комментариев
+const showCountComments = () => {
+  commentsShownCount.textContent = Comments.TOTAL < Comments.SHOWN ? Comments.TOTAL : Comments.SHOWN;
+  commentsTotalCount.textContent = Comments.TOTAL;
+};
+
+// Функция отрисовки комментариев
+const showComments = () => {
+  Comments.COMMENTS.slice(Comments.SHOWN - Comments.STEP, Comments.SHOWN).forEach((comment) => {
+    socialCommentsList.append(renderComent(comment));
+  });
+};
+
+// Функция добавления слушателя
+const onLoaderClick = () => {
+  Comments.SHOWN += Comments.STEP;
+  showComments();
+  showCountComments();
+  checkButtonLoader();
+};
+
+
+// Функция удаления слушателя
+const removeLoaderClick = () => {
+  commentsLoader.removeEventListener('click', onLoaderClick);
+};
+
+// Функция проверки количества комментариев
+const checkComentsLength = () => {
+  if (Comments.TOTAL > Comments.STEP) {
+    Comments.SHOWN += Comments.STEP;
+    commentsLoader.addEventListener('click', onLoaderClick);
+  } else {
+    Comments.SHOWN += Comments.TOTAL;
+  }
+  checkButtonLoader();
+  showComments();
+  showCountComments();
+};
+
+// Функция отрисовки комментариев
+const rensderComments = (comments) => {
+  socialCommentsList.innerHTML = '';
+  Comments.SHOWN = 0;
+  Comments.TOTAL = comments.length;
+  Comments.COMMENTS = comments;
+  checkComentsLength();
+};
+
+// Экспорт
+export { rensderComments, removeLoaderClick };

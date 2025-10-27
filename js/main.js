@@ -7,5 +7,5 @@ const cards = createCards();
 
 renderCards(cards);
 
-
+// Экспорт
 export { cards };

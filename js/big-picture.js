@@ -1,18 +1,13 @@
 // Модуль открытия большого изображения
 // Импорт
 import { onEscapeKey } from './check-escape.js';
-import { rensderComments } from './coments.js';
+import { rensderComments, removeLoaderClick } from './coments.js';
 
+// Константы
 const picture = document.querySelector('.big-picture');
 const buttonPictureClose = picture.querySelector('#picture-cancel');
 const pictureImage = picture.querySelector('.big-picture__img img');
 const pictureLikesCount = picture.querySelector('.likes-count');
-
-// const socialCommentCount = picture.querySelector('.social__comment-count');
-// const commentsLoader = picture.querySelector('.comments-loader');
-// const commentsShownCount = picture.querySelector('.social__comment-shown-count');
-// const commentsTotalCount = picture.querySelector('.social__comment-total-count');
-
 const descriptionPicture = picture.querySelector('.social__caption');
 const body = document.querySelector('body');
 
@@ -21,6 +16,7 @@ const body = document.querySelector('body');
 const closeBigPicture = () => {
   picture.classList.add('hidden');
   body.classList.remove('modal-open');
+  removeLoaderClick();
   document.removeEventListener('keydown', onEscapeKey);
 };
 
@@ -28,6 +24,11 @@ const closeBigPicture = () => {
 const onPictureCloseClick = () => {
   buttonPictureClose.addEventListener('click', closeBigPicture);
   document.removeEventListener('keydown', onEscapeKey);
+};
+
+// Функция удаления слушателя
+const removePictureCloseClick = () => {
+  buttonPictureClose.removeEventListener('click', closeBigPicture);
 };
 
 // Функция открытия большого изображения
@@ -50,4 +51,5 @@ const onCardClick = (cardElement, card) => {
   });
 };
 
-export { onCardClick, closeBigPicture };
+// Экспорт
+export { onCardClick, closeBigPicture, removePictureCloseClick };

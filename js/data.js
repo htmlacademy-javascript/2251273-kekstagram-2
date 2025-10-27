@@ -10,7 +10,7 @@ const NumberOfLikes = {
 // Константы комментариев
 const NumberOfComments = {
   MIN: 0,
-  MAX: 30,
+  MAX: 10,
 };
 // Константы количества карточек
 const NumberOfCards = {
