@@ -5,7 +5,7 @@ import { renderCards } from './cards.js';
 
 // Создание массива карточек
 createCards();
-// Отрисовка карточек
+//
 renderCards();
+// console.log(DATA_CARDS);
 
-export { cards };
