@@ -3,8 +3,7 @@
 import { createCards } from './data.js';
 import { renderCards } from './cards.js';
 
-const cards = createCards();
+createCards();
 
-renderCards(cards);
+renderCards();
 
-export { cards };
