@@ -2,6 +2,8 @@
 // Импорт
 import { getRandomInt, getRandomNumber } from './util.js';
 
+const DATA_CARDS = [];
+
 // Константы лайков
 const NumberOfLikes = {
   MIN: 15,
@@ -10,7 +12,7 @@ const NumberOfLikes = {
 // Константы комментариев
 const NumberOfComments = {
   MIN: 0,
-  MAX: 10,
+  MAX: 15,
 };
 // Константы количества карточек
 const NumberOfCards = {
@@ -70,11 +72,15 @@ const createCard = () => {
     likes: getCounterLikes(),
     comments: createComments(numberComents),
   };
-  return card;
+  DATA_CARDS.push(card);
 };
 
 // Cоздание массива карточек
+// const createCards = () => Array.from({ length: NumberOfCards.MAX }, createCard);
 const createCards = () => Array.from({ length: NumberOfCards.MAX }, createCard);
 
+// Функция получения массива карточек
+const getDataCards = () => DATA_CARDS;
+
 // Экспорт
-export { createCards };
+export { createCards, getDataCards };
