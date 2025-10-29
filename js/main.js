@@ -1,10 +1,10 @@
 // Модуль главного скрипта
 // Импорт
-import { createCards } from './data.js';
+import { createCards, getDataCards } from './data.js';
 import { renderCards } from './cards.js';
 
-const cards = createCards();
+// Создание массива карточек
+createCards();
 
-renderCards(cards);
-
-export { cards };
+// Отрисовка карточек
+renderCards(getDataCards());
