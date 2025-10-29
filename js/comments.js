@@ -1,6 +1,6 @@
 // Модуль отрисовки коментариев
-import { getDataCards } from './data.js';
 
+// Константы
 const socialCommentCounter = document.querySelector('.social__comment-count');
 const commentShownCount = socialCommentCounter.querySelector('.social__comment-shown-count');
 const commentTotalCount = socialCommentCounter.querySelector('.social__comment-total-count');
@@ -15,23 +15,22 @@ const Comments = {
   DATA: [],
 };
 
-// Проверка загрузчика коментариев
+// Функция проверки кнопки загрузки
 const checkLoader = () => {
   if (Comments.SHOW >= Comments.TOTAL) {
     commentsLoader.classList.add('hidden');
   } else {
     commentsLoader.classList.remove('hidden');
   }
-  // console.log(Comments.SHOW, Comments.TOTAL);
 };
 
-// Сброс коментариев
+// Функция сброса коментариев
 const resetComments = () => {
   Comments.SHOW = 0;
   Comments.TOTAL = 0;
 };
 
-// Отрисовка коментария
+// Функция отрисовки коментария
 const renderComment = (comment) => {
   const fragment = document.createDocumentFragment();
 
@@ -57,7 +56,7 @@ const renderComment = (comment) => {
 
 };
 
-// Отрисовка коментариев
+// Функция показа коментариев
 const showComments = () => {
   const visibleComments = Comments.DATA.slice((Comments.SHOW % Comments.STEP) ? (Comments.SHOW - Comments.SHOW % Comments.STEP) : Comments.SHOW - Comments.STEP , Comments.SHOW);
   const fragment = document.createDocumentFragment();
@@ -67,7 +66,7 @@ const showComments = () => {
   socialommentsList.appendChild(fragment);
 };
 
-// Проверка количества коментариев
+// Функция проверки списка коментариев
 const checkComentsLength = () => {
   Comments.TOTAL = Comments.DATA.length;
   if (Comments.TOTAL < Comments.STEP + Comments.SHOW) {
@@ -82,18 +81,20 @@ const checkComentsLength = () => {
   commentShownCount.textContent = Comments.SHOW;
 };
 
-// Отрисовка коментариев
-const renderComments = (cardId) => {
-  const comments = getDataCards().find((item) => item.id === Number(cardId)).comments;
+// Функция отрисовки коментариев
+const renderComments = (comments) => {
   Comments.DATA = comments;
   resetComments();
   checkComentsLength();
 };
 
+// Функция загрузки коментариев
 const onLoaderClick = () => {
   checkComentsLength();
 };
 
+// Функция добавления обработчика
 commentsLoader.addEventListener('click', onLoaderClick);
 
+// Экспорт
 export { renderComments };

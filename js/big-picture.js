@@ -1,9 +1,9 @@
 // Модуль открытия большого изображения
 // Импорт
-import { getDataCards } from './data.js';
 import { renderComments } from './comments.js';
 import { onEscapeClick, offEscapeClick } from './escape.js';
 
+// Константы
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
 const bigPictureSocial = bigPicture.querySelector('.big-picture__social');
@@ -21,37 +21,39 @@ const clearBigPicture = () => {
   socialCaption.textContent = '';
 };
 
-// Функция открытия большого изображения
-const openBigPicture = (cardId) => {
+// Функция закрытия большого изображения
+const closeBigPicture = () => {
   clearBigPicture();
-  const card = getDataCards().find((item) => item.id === Number(cardId));
+  offEscapeClick();
+
+  bigPicture.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+};
+
+// Функция закрытия большого изображения
+const onButtonCancelClick = (evt) => {
+  evt.preventDefault();
+  closeBigPicture();
+};
+
+// Функция открытия большого изображения
+const openBigPicture = (card) => {
+  clearBigPicture();
 
   bigPictureImage.src = card.url;
   bigPictureImage.alt = card.description;
   socialCaption.textContent = card.description;
   likesCount.textContent = card.likes;
 
-  renderComments(cardId);
+  renderComments(card.comments);
 
   onEscapeClick();
+
+  bigPictureCancel.addEventListener('click', onButtonCancelClick);
 
   bigPicture.classList.remove('hidden');
   document.body.classList.add('modal-open');
 };
 
-// Функция закрытия большого изображения
-const closeBigPicture = () => {
-  clearBigPicture();
-  offEscapeClick();
-  bigPicture.classList.add('hidden');
-  document.body.classList.remove('modal-open');
-};
-
-const onButtonCancelClick = (evt) => {
-  evt.preventDefault();
-  closeBigPicture();
-};
-
-bigPictureCancel.addEventListener('click', onButtonCancelClick);
-
+// Экспорт
 export { openBigPicture, closeBigPicture };

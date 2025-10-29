@@ -1,18 +1,10 @@
 //Модуль отрисовки карточек
-//
-import { getDataCards } from './data.js';
+// Импорт
 import { openBigPicture } from './big-picture.js';
 
+// Константы
 const сardsСontainer = document.querySelector('.pictures');
 const cardTemplate = document.querySelector('#picture').content.querySelector('.picture');
-
-// Функция клика по карточке
-const onCardClick = (evt) => {
-  if (evt.target.tagName === 'IMG') {
-    evt.preventDefault();
-    openBigPicture(evt.target.dataset.id);
-  }
-};
 
 // Функция отрисовки карточки
 const renderCard = (card) => {
@@ -29,23 +21,26 @@ const renderCard = (card) => {
   cardComments.textContent = card.comments.length;//Количество комментариев
   cardLikes.textContent = card.likes;//Количество лайков
 
+  cardElement.addEventListener('click', (evt) => {
+    evt.preventDefault();
+    openBigPicture(card);
+  });
+
   fragment.appendChild(cardElement);
 
   return fragment;
 };
 
 // Функция отрисовки всех карточек
-const renderCards = () => {
+const renderCards = (cards) => {
   const fragment = document.createDocumentFragment();
 
-  getDataCards().forEach((element) => {
+  cards.forEach((element) => {
     fragment.appendChild(renderCard(element));
   });
 
   сardsСontainer.appendChild(fragment);
 };
-
-сardsСontainer.addEventListener('click', onCardClick);
 
 // Экспорт
 export { renderCards };

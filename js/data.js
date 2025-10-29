@@ -2,8 +2,8 @@
 // Импорт
 import { getRandomInt, getRandomNumber } from './util.js';
 
+// Константы
 const DATA_CARDS = [];
-
 // Константы лайков
 const NumberOfLikes = {
   MIN: 15,
@@ -76,7 +76,6 @@ const createCard = () => {
 };
 
 // Cоздание массива карточек
-// const createCards = () => Array.from({ length: NumberOfCards.MAX }, createCard);
 const createCards = () => Array.from({ length: NumberOfCards.MAX }, createCard);
 
 // Функция получения массива карточек
