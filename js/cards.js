@@ -1,4 +1,4 @@
-//Модуль отрисовки карточек
+// Модуль отрисовки карточек
 // Импорт
 import { openBigPicture } from './big-picture.js';
 
