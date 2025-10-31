@@ -13,7 +13,7 @@ const pristine = new Pristine(form, {
   errorClass: 'img-upload__field-wrapper--error',
   successClass: 'img-upload__field-wrapper--valid',
   errorTextParent: 'img-upload__field-wrapper',
-  errorTextTag: 'div',
+  errorTextTag: 'p',
 });
 
 // Константы
