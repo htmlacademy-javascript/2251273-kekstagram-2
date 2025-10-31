@@ -8,6 +8,8 @@ const form = document.querySelector('.img-upload__form');
 const imgUpload = form.querySelector('.img-upload__overlay');
 const imgUploadInput = form.querySelector('.img-upload__input');
 const imgUploadClose = form.querySelector('.img-upload__cancel');
+const inputDescription = form.querySelector('.text__description');
+const textHashtags = form.querySelector('.text__hashtags');
 
 // Функция установки атрибутов
 const setFormAttributes = () => {
@@ -23,6 +25,8 @@ const closeForm = () => {
   offEscapeClick();
   offFormSubmit();
   imgUploadInput.value = '';
+  inputDescription.value = '';
+  textHashtags.value = '';
   form.removeEventListener('submit', onFormSubmit);
   imgUpload.classList.add('hidden');
   imgUploadClose.removeEventListener('click', closeForm);
