@@ -18,7 +18,8 @@ const checkEscape = (evt) => {
   if (evt.key === 'Escape') {
     if (bigPictureStaus) {
       closeBigPicture();
-    } else if (!formStatus) {
+      document.removeEventListener('keydown', checkEscape);
+    } else if (!formStatus && evt.target !== inputDescription && evt.target !== textHashtags) {
       closeForm();
       document.removeEventListener('keydown', checkEscape);
     }
