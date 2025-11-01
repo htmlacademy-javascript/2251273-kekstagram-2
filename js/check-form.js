@@ -48,7 +48,7 @@ const getHashtagsErrorMessage = () => hashtagErrorMessages.join(', ');
 
 // Валидатор хэштегов
 const hashtagsValidator = (hashtags) => {
-  const hashtagsArray = hashtags.split(/[\s]+/).filter((hashtag) => /^#/.test(hashtag)).map((hashtag) => hashtag.toLowerCase());
+  const hashtagsArray = hashtags.split(/[\s]+/).filter((hashtag) => hashtag.length).map((hashtag) => hashtag.toLowerCase());
 
   hashtagErrorMessages = [];
   let flag = true;
@@ -66,7 +66,8 @@ const hashtagsValidator = (hashtags) => {
     const wrongHashtag = hashtagsArray.filter((hashtag) => !checkLengthString(hashtag, Limit.HASHTAGS_MIN_LENGTH, Limit.HASHTAGS_MAX_LENGTH));
     hashtagErrorMessages.push(`Неправильная длина хэштега! (${filterDuplicateArr(wrongHashtag).join(', ')})`);
     flag = false;
-  } if (!checkDuplicateArr(hashtagsArray)) {
+  }
+  if (!checkDuplicateArr(hashtagsArray)) {
     const duplicateHashtag = getDuplicateArr(hashtagsArray);
     hashtagErrorMessages.push(`Повторяющийся хэштег! (${filterDuplicateArr(duplicateHashtag).join(', ')})`);
     flag = false;
