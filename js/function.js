@@ -1,7 +1,7 @@
 // Модуль функции
 
 // Функция извлечения цифр
-const strToNumber = (str = '') => str.split('').filter((item) => /[0-9]/.test(item)).join('');
+const strToNumber = (str = '') => Number(str.split('').filter((item) => /[0-9]/.test(item)).join(''));
 
 // Функция конвертации времени в минуты
 const timeConvert = (time) => {
