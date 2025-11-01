@@ -56,21 +56,25 @@ const hashtagsValidator = (hashtags) => {
   if (hashtagsArray.length > Limit.HASHTAGS_MAX) {
     hashtagErrorMessages.push(`Слишком много хэштегов! (${hashtagsArray.length} / ${Limit.HASHTAGS_MAX})`);
     flag = false;
+    return flag;
   }
   if (hashtagsArray.some((hashtag) => !hashtagValidator(hashtag))) {
     const wrongHashtag = hashtagsArray.filter((hashtag) => !hashtagValidator(hashtag));
     hashtagErrorMessages.push(`Неправильный хэштег! (${filterDuplicateArr(wrongHashtag).join(', ')})`);
     flag = false;
+    return flag;
   }
   if (!checkLengthAllItemsArr(hashtagsArray, Limit.HASHTAGS_MIN_LENGTH, Limit.HASHTAGS_MAX_LENGTH)) {
     const wrongHashtag = hashtagsArray.filter((hashtag) => !checkLengthString(hashtag, Limit.HASHTAGS_MIN_LENGTH, Limit.HASHTAGS_MAX_LENGTH));
     hashtagErrorMessages.push(`Неправильная длина хэштега! (${filterDuplicateArr(wrongHashtag).join(', ')})`);
     flag = false;
+    return flag;
   }
   if (!checkDuplicateArr(hashtagsArray)) {
     const duplicateHashtag = getDuplicateArr(hashtagsArray);
     hashtagErrorMessages.push(`Повторяющийся хэштег! (${filterDuplicateArr(duplicateHashtag).join(', ')})`);
     flag = false;
+    return flag;
   }
   return flag;
 };
