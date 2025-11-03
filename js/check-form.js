@@ -19,7 +19,7 @@ const pristine = new Pristine(form, {
 // Константы
 const Limit = {
   DESCRIPTION: 140,
-  HASHTAGS_MIN_LENGTH: 1,
+  HASHTAGS_MIN_LENGTH: 2,
   HASHTAGS_MAX_LENGTH: 20,
   HASHTAGS_MAX: 5,
 };
@@ -36,7 +36,7 @@ const checkButtonSubmit = () => {
 
 // Валидатор хэштега
 const hashtagValidator = (hashtag) => {
-  const regexp = /^#[^ !@#$%^&*(),.?":{}|<>]*$/gi;
+  const regexp = /^#[^ !@#$%^&*(),.?":{}|<>+-]*$/gi;
   return regexp.test(hashtag);
 };
 
