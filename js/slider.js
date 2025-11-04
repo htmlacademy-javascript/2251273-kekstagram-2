@@ -8,7 +8,6 @@ const effectsButtons = document.querySelectorAll('.effects__radio');
 const imgUploadPreview = document.querySelector('.img-upload__preview img');
 const effectValue = document.querySelector('.effect-level__value');
 
-
 const scaleControlValue = document.querySelector('.scale__control--value');
 const buttonSmaller = document.querySelector('.scale__control--smaller');
 const buttonBigger = document.querySelector('.scale__control--bigger');
