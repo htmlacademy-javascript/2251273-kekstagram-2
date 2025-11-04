@@ -4,7 +4,6 @@ import { createCards, getDataCards } from './data.js';
 import { renderCards } from './cards.js';
 import { setFormAttributes } from './form.js';
 
-
 // Создание массива карточек
 createCards();
 
