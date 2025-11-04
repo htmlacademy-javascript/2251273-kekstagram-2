@@ -36,7 +36,7 @@ const checkButtonSubmit = () => {
 
 // Валидатор хэштега
 const hashtagValidator = (hashtag) => {
-  const regexp = /^#[a-zа-яё0-9_]*$/gi;
+  const regexp = /^#[a-z\u0430-\u044F\u04510-9_]*$/gi;
   return regexp.test(hashtag);
 };
 
