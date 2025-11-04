@@ -125,7 +125,7 @@ slider.noUiSlider.on('update', () => {
   effectValue.setAttribute('value', slider.noUiSlider.get());
 });
 
-// Обработка событий
+// Обработка событий изменения эффекта
 effectsButtons.forEach((button) => {
   button.addEventListener('change', () => {
     const effect = button.value;
