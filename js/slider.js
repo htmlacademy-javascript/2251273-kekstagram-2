@@ -1,4 +1,4 @@
-// Модуль работы с слайдером
+// Модуль работы со слайдером
 // Константы
 import { strToNumber, getMinPercent, getMaxPercent } from './util.js';
 
