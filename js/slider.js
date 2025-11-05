@@ -14,9 +14,9 @@ const scaleControlValue = document.querySelector('.scale__control--value');
 const buttonSmaller = document.querySelector('.scale__control--smaller');
 const buttonBigger = document.querySelector('.scale__control--bigger');
 
-const SliderSettings = getSliderSettings();
-const Scale = getScaleSettings();
-const Effects = getEffectsSettings();
+const sliderSettings = getSliderSettings();
+const scaleSettings = getScaleSettings();
+const effectsSettings = getEffectsSettings();
 
 // Трансформация изображения
 const transformScaleImage = () => {
@@ -25,23 +25,23 @@ const transformScaleImage = () => {
 };
 
 // Функция проверки эффекта
-const checkedEffect = () => {
+const checkedEffectSlider = () => {
   const effect = document.querySelector('input[name="effect"]:checked').value;
   if (effect === 'none') {
     sliderContainer.classList.add('hidden');
     effectValue.setAttribute('value', '');
   } else {
     sliderContainer.classList.remove('hidden');
-    effectValue.setAttribute('value', SliderSettings[effect].start);
+    effectValue.setAttribute('value', sliderSettings[effect].start);
   }
 };
 
 // Функция сброса эффекта
-const resetEffect = () => {
+const resetEffectSlider = () => {
   imgUploadPreview.style.filter = '';
   effectsButtonNone.checked = true;
-  checkedEffect();
-  scaleControlValue.setAttribute('value', `${Scale.MAX}%`);
+  checkedEffectSlider();
+  scaleControlValue.setAttribute('value', `${scaleSettings.MAX}%`);
   transformScaleImage();
 };
 
@@ -71,7 +71,7 @@ noUiSlider.create(slider, {
 slider.noUiSlider.on('update', () => {
   const value = slider.noUiSlider.get();
   const effect = document.querySelector('input[name="effect"]:checked').value;
-  imgUploadPreview.style.filter = Effects[effect](value);
+  imgUploadPreview.style.filter = effectsSettings[effect](value);
   effectValue.setAttribute('value', slider.noUiSlider.get());
 });
 
@@ -79,24 +79,24 @@ slider.noUiSlider.on('update', () => {
 effectsButtons.forEach((button) => {
   button.addEventListener('change', () => {
     const effect = button.value;
-    checkedEffect();
-    slider.noUiSlider.updateOptions(SliderSettings[effect]);
+    checkedEffectSlider();
+    slider.noUiSlider.updateOptions(sliderSettings[effect]);
   });
 });
 
 // Уменьшение изображения
 buttonSmaller.addEventListener('click', () => {
   const value = scaleControlValue.value;
-  scaleControlValue.setAttribute('value', `${getMinPercent(value, Scale.STEP, Scale.MIN)}%`);
+  scaleControlValue.setAttribute('value', `${getMinPercent(value, scaleSettings.STEP, scaleSettings.MIN)}%`);
   transformScaleImage();
 });
 
 // Увеличение изображения
 buttonBigger.addEventListener('click', () => {
   const value = scaleControlValue.value;
-  scaleControlValue.setAttribute('value', `${getMaxPercent(value, Scale.STEP, Scale.MAX)}%`);
+  scaleControlValue.setAttribute('value', `${getMaxPercent(value, scaleSettings.STEP, scaleSettings.MAX)}%`);
   transformScaleImage();
 });
 
 // Экспорт
-export { checkedEffect, resetEffect };
+export { checkedEffectSlider, resetEffectSlider };
