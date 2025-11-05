@@ -2,7 +2,7 @@
 // Импорт
 import { onEscapeClick, offEscapeClick } from './escape.js';
 import { setDescriptionAttribute, checkButtonSubmit, onFormSubmit, offFormSubmit } from './check-form.js';
-import { checkedEffect, resetEffect } from './slider.js';
+import { checkedEffectSlider, resetEffectSlider } from './slider.js';
 
 // Константы
 const form = document.querySelector('.img-upload__form');
@@ -25,7 +25,7 @@ const setFormAttributes = () => {
 const closeForm = () => {
   offEscapeClick();
   offFormSubmit();
-  resetEffect();
+  resetEffectSlider();
   imgUploadInput.value = '';
   inputDescription.value = '';
   textHashtags.value = '';
@@ -37,7 +37,7 @@ const closeForm = () => {
 // Функция открытия формы
 const openForm = () => {
   onEscapeClick();
-  checkedEffect();
+  checkedEffectSlider();
   form.addEventListener('submit', onFormSubmit);
   imgUpload.classList.remove('hidden');
   imgUploadClose.addEventListener('click', closeForm);
