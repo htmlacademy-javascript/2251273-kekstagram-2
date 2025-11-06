@@ -1,4 +1,6 @@
 //
+import { onEscapeClick } from './escape.js';
+
 const body = document.querySelector('body');
 const dataErrorTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
@@ -12,7 +14,6 @@ const closeMessageLoadError = () => {
   const messageError = document.querySelector('.data-error');
   messageError.remove();
 };
-
 const showMessageLoadError = () => {
   const fragment = document.createDocumentFragment();
   const messageError = dataErrorTemplate.cloneNode(true);
@@ -20,6 +21,7 @@ const showMessageLoadError = () => {
   body.appendChild(fragment);
   setTimeout(closeMessageLoadError, MessageTime.ERROR);
 };
+
 
 const closeMessageSubmitSuccess = () => {
   const messageSuccess = document.querySelector('.success');
@@ -31,6 +33,7 @@ const showMessageSubmitSuccess = () => {
   const messageSuccess = successTemplate.cloneNode(true);
   fragment.appendChild(messageSuccess);
   body.appendChild(fragment);
+  onEscapeClick();
 };
 
 const closeMessageSubmitError = () => {

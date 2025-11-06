@@ -2,6 +2,7 @@
 // Импорт
 import { closeBigPicture } from './big-picture.js';
 import { closeForm } from './form.js';
+// import { closeMessageSubmitSuccess } from './modal.js';
 
 // Константы
 const form = document.querySelector('.img-upload__form');
@@ -9,6 +10,9 @@ const inputDescription = form.querySelector('.text__description');
 const textHashtags = form.querySelector('.text__hashtags');
 const bigPicture = document.querySelector('.big-picture');
 const imgUpload = document.querySelector('.img-upload__overlay');
+
+// const messageSuccess = document.querySelector('.success');
+// const messageError = document.querySelector('.error');
 
 // Функция проверки нажатия клавиши ESC
 const checkEscape = (evt) => {
