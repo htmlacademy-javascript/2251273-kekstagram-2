@@ -25,11 +25,6 @@ const showLoadError = () => {
 };
 
 //
-// const offSubmitSuccess = () => {
-//   offEscapeClick();
-// };
-
-//
 const closeSubmitSuccess = () => {
   const messageSuccess = document.querySelector('.success');
   messageSuccess.remove();
