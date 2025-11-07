@@ -1,8 +1,8 @@
 // Модуль для работы с API
-
+// Константы
 const UrlApi = {
   GET: 'https://31.javascript.htmlacademy.pro/kekstagram/data',
-  POST: 'https://31.javascript.htmlaca demy.pro/kekstagram'
+  POST: 'https://31.javascript.htmlacademy.pro/kekstagram'
 };
 
 const Method = {
@@ -10,7 +10,7 @@ const Method = {
   POST: 'POST'
 };
 
-
+// Функция запроса
 const request = (onSuccess, onError, method, body = null , url) => {
   fetch(url, {
     method: method,
@@ -29,8 +29,9 @@ const request = (onSuccess, onError, method, body = null , url) => {
     .catch(onError);
 };
 
+// Функции запроса
 const getDataApi = (onSuccess, onError) => request(onSuccess, onError, Method.GET, null, UrlApi.GET);
 const sendDataApi = (onSuccess, onError, body) => request(onSuccess, onError, Method.POST, body, UrlApi.POST);
 
+// Экспорт
 export { getDataApi, sendDataApi };
-

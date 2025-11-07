@@ -1,84 +1,43 @@
-//
-import { onEscapeClick, offEscapeClick } from './escape.js';
-import { closeForm } from './form.js';
+// Модуль работы с модальными окнами
+// Импорт
+import { isEscapeKey } from './util';
 
-const body = document.querySelector('body');
-const dataErrorTemplate = document.querySelector('#data-error').content.querySelector('.data-error');
+// Константы
+const bodyContainer = document.querySelector('body');
 const successTemplate = document.querySelector('#success').content.querySelector('.success');
 const errorTemplate = document.querySelector('#error').content.querySelector('.error');
 
-const MessageTime = {
-  ERROR: 5000,
+// Функция закрытия модального окна
+const closeModal = (event) => {
+  event.preventDefault();
+
+  const modalMessage = document.querySelector('.modal-message');
+  if (isEscapeKey(event)
+    || event.target === modalMessage
+    || event.target === modalMessage.querySelector('button')) {
+
+    document.removeEventListener('keydown', closeModal);
+    document.removeEventListener('click', closeModal);
+    modalMessage.remove();
+  }
 };
 
-//
-const closeLoadError = () => {
-  const messageError = document.querySelector('.data-error');
-  messageError.remove();
-};
-const showLoadError = () => {
+// Функция создания модального окна
+const createModal = (template) => {
   const fragment = document.createDocumentFragment();
-  const messageError = dataErrorTemplate.cloneNode(true);
-  fragment.appendChild(messageError);
-  body.appendChild(fragment);
-  setTimeout(closeLoadError, MessageTime.ERROR);
+  const modalMessage = template.cloneNode(true);
+  modalMessage.classList.add('modal-message');
+
+  document.addEventListener('keydown', closeModal);
+  document.addEventListener('click', closeModal);
+
+  fragment.appendChild(modalMessage);
+  bodyContainer.appendChild(fragment);
 };
 
-//
-const closeSubmitSuccess = () => {
-  const messageSuccess = document.querySelector('.success');
-  messageSuccess.remove();
-  offEscapeClick();
-};
+// Функции показа модальных окон
+const modalSuccess = () => createModal(successTemplate);
+const modalError = () => createModal(errorTemplate);
 
-//
-const onSubmitSuccess = () => {
-  const messageSuccess = document.querySelector('.success');
-  const buttton = messageSuccess.querySelector('.success__button');
-  buttton.addEventListener('click', closeSubmitSuccess);
-  messageSuccess.addEventListener('click', (evt) => {
-    if (evt.target === messageSuccess) {
-      closeSubmitSuccess();
-    }
-  });
-  onEscapeClick();
-};
-
-//
-const showSubmitSuccess = () => {
-  const fragment = document.createDocumentFragment();
-  const messageSuccess = successTemplate.cloneNode(true);
-  fragment.appendChild(messageSuccess);
-  body.appendChild(fragment);
-  closeForm();
-  onSubmitSuccess();
-};
-
-//
-const closeSubmitError = () => {
-  const messageError = document.querySelector('.error');
-  messageError.remove();
-  offEscapeClick();
-};
-
-const onSubmitError = () => {
-  const messageError = document.querySelector('.error');
-  const buttton = messageError.querySelector('.error__button');
-  buttton.addEventListener('click', closeSubmitError);
-  messageError.addEventListener('click', (evt) => {
-    if (evt.target === messageError) {
-      closeSubmitError();
-    }
-  });
-  onEscapeClick();
-};
-
-const showSubmitError = () => {
-  const fragment = document.createDocumentFragment();
-  const messageError = errorTemplate.cloneNode(true);
-  fragment.appendChild(messageError);
-  body.appendChild(fragment);
-  onSubmitError();
-};
-
-export { showLoadError, closeLoadError, showSubmitSuccess, closeSubmitSuccess, showSubmitError, closeSubmitError };
+// Экспорт
+export { modalSuccess, modalError };

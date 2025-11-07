@@ -1,6 +1,7 @@
 // Модуль открытия формы
 // Импорт
-import { onEscapeClick, offEscapeClick } from './escape.js';
+// import { onEscapeClick, offEscapeClick } from './escape.js';
+import { isEscapeKey } from './util.js';
 import { setDescriptionAttribute, checkButtonSubmit, onFormSubmit, offFormSubmit } from './check-form.js';
 import { checkedEffectSlider, resetEffectSlider } from './slider.js';
 
@@ -22,25 +23,32 @@ const setFormAttributes = () => {
 };
 
 // Функция закрытия формы
-const closeForm = () => {
-  offEscapeClick();
-  offFormSubmit();
-  resetEffectSlider();
-  imgUploadInput.value = '';
-  inputDescription.value = '';
-  textHashtags.value = '';
-  form.removeEventListener('submit', onFormSubmit);
-  imgUpload.classList.add('hidden');
-  imgUploadClose.removeEventListener('click', closeForm);
+const closeForm = (event) => {
+  if (isEscapeKey(event) || event.target === imgUploadClose) {
+    const modalMessage = document.querySelector('.modal-message');
+    if (!modalMessage && event.target !== inputDescription && event.target !== textHashtags) {
+      offFormSubmit();
+      resetEffectSlider();
+      imgUploadInput.value = '';
+      inputDescription.value = '';
+      textHashtags.value = '';
+      form.removeEventListener('submit', onFormSubmit);
+      imgUpload.classList.add('hidden');
+
+      imgUploadClose.removeEventListener('click', closeForm);
+      document.removeEventListener('keydown', closeForm);
+    }
+  }
 };
 
 // Функция открытия формы
 const openForm = () => {
-  onEscapeClick();
   checkedEffectSlider();
   form.addEventListener('submit', onFormSubmit);
   imgUpload.classList.remove('hidden');
+
   imgUploadClose.addEventListener('click', closeForm);
+  document.addEventListener('keydown', closeForm);
 };
 
 // Слушатели

@@ -4,13 +4,11 @@
 import { renderCards } from './cards.js';
 import { setFormAttributes } from './form.js';
 import { getDataApi } from './api.js';
-import { showLoadError } from './modal.js';
+import { showMessageLoadError } from './message.js';
 
 
 // Отрисовка карточек
-getDataApi(renderCards, showLoadError);
-
-// console.log(getDataCards());
+getDataApi(renderCards, showMessageLoadError);
 
 // Установка атрибутов формы
 setFormAttributes();
