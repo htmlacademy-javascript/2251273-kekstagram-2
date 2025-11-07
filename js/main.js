@@ -9,6 +9,19 @@ import { showMessageLoadError } from './message.js';
 
 // Отрисовка карточек
 getDataApi(renderCards, showMessageLoadError);
+// console.log(getDataApi());
+// const cards = getDataApi();
+// renderCards(cards);
+
+// (async () => {
+//   try {
+//     const photos = await getDataApi();
+//     renderCards(photos);
+//     // setPhotoData(photos);
+//   } catch {
+//     showMessageLoadError();
+//   }
+// }) ();
 
 // Установка атрибутов формы
 setFormAttributes();
