@@ -1,6 +1,5 @@
 // Модуль открытия формы
 // Импорт
-// import { onEscapeClick, offEscapeClick } from './escape.js';
 import { isEscapeKey } from './util.js';
 import { setDescriptionAttribute, checkButtonSubmit, onFormSubmit, offFormSubmit } from './check-form.js';
 import { checkedEffectSlider, resetEffectSlider } from './slider.js';
@@ -22,22 +21,32 @@ const setFormAttributes = () => {
   form.setAttribute('action', 'https://31.javascript.htmlacademy.pro/kekstagram');
 };
 
+
+const closeForm = () => {
+  offFormSubmit();
+  resetEffectSlider();
+  imgUploadInput.value = '';
+  inputDescription.value = '';
+  textHashtags.value = '';
+  form.removeEventListener('submit', onFormSubmit);
+  imgUpload.classList.add('hidden');
+};
+
 // Функция закрытия формы
-const closeForm = (event) => {
+const checkCloseForm = (event) => {
   if (isEscapeKey(event) || event.target === imgUploadClose) {
     const modalMessage = document.querySelector('.modal-message');
     if (!modalMessage && event.target !== inputDescription && event.target !== textHashtags) {
-      offFormSubmit();
-      resetEffectSlider();
-      imgUploadInput.value = '';
-      inputDescription.value = '';
-      textHashtags.value = '';
-      form.removeEventListener('submit', onFormSubmit);
-      imgUpload.classList.add('hidden');
+      closeForm();
 
-      imgUploadClose.removeEventListener('click', closeForm);
-      document.removeEventListener('keydown', closeForm);
+      imgUploadClose.removeEventListener('click', checkCloseForm);
+      document.removeEventListener('keydown', checkCloseForm);
     }
+  } else if (event instanceof SubmitEvent) {
+    closeForm();
+
+    imgUploadClose.removeEventListener('click', checkCloseForm);
+    document.removeEventListener('keydown', checkCloseForm);
   }
 };
 
@@ -47,8 +56,8 @@ const openForm = () => {
   form.addEventListener('submit', onFormSubmit);
   imgUpload.classList.remove('hidden');
 
-  imgUploadClose.addEventListener('click', closeForm);
-  document.addEventListener('keydown', closeForm);
+  imgUploadClose.addEventListener('click', checkCloseForm);
+  document.addEventListener('keydown', checkCloseForm);
 };
 
 // Слушатели
@@ -58,4 +67,4 @@ form.addEventListener('input', () => {
 });
 
 // Экспорт
-export { openForm, closeForm, setFormAttributes };
+export { openForm, checkCloseForm, setFormAttributes };
