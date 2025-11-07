@@ -1,7 +1,7 @@
 // Модуль проверки формы
 import { checkLengthString, getDuplicateArr, checkDuplicateArr, filterDuplicateArr, checkLengthAllItemsArr } from './util.js';
 import { sendDataApi } from './api.js';
-import { showMessageSubmitSuccess, closeMessageSubmitSuccess, showMessageSubmitError, closeMessageSubmitError } from './modal.js';
+import { showSubmitSuccess, showSubmitError } from './modal.js';
 
 // Константы
 const form = document.querySelector('.img-upload__form');
@@ -89,10 +89,7 @@ pristine.addValidator(inputDescription, descriptionValidator, getDescriptionErro
 const onFormSubmit = (evt) => {
   evt.preventDefault();
   if (pristine.validate()) {
-    sendDataApi(showMessageSubmitSuccess, showMessageSubmitError, new FormData(form));
-  } else {
-    closeMessageSubmitSuccess();
-    closeMessageSubmitError();
+    sendDataApi(showSubmitSuccess, showSubmitError, new FormData(form));
   }
 };
 

@@ -2,7 +2,7 @@
 // Импорт
 import { closeBigPicture } from './big-picture.js';
 import { closeForm } from './form.js';
-// import { closeMessageSubmitSuccess } from './modal.js';
+import { closeSubmitSuccess, closeSubmitError } from './modal.js';
 
 // Константы
 const form = document.querySelector('.img-upload__form');
@@ -18,12 +18,21 @@ const imgUpload = document.querySelector('.img-upload__overlay');
 const checkEscape = (evt) => {
   const bigPictureStaus = bigPicture.classList.contains('hidden');
   const formStatus = imgUpload.classList.contains('hidden');
+  const messageSuccess = document.querySelector('.success');
+  const messageError = document.querySelector('.error');
+
   if (evt.key === 'Escape') {
     if (!bigPictureStaus) {
       closeBigPicture();
       document.removeEventListener('keydown', checkEscape);
-    } else if (!formStatus && evt.target !== inputDescription && evt.target !== textHashtags) {
+    } else if (!formStatus && evt.target !== inputDescription && evt.target !== textHashtags && !closeSubmitError) {
       closeForm();
+      document.removeEventListener('keydown', checkEscape);
+    } else if (messageSuccess) {
+      closeSubmitSuccess();
+      document.removeEventListener('keydown', checkEscape);
+    } else if (messageError) {
+      closeSubmitError();
       document.removeEventListener('keydown', checkEscape);
     }
   }

@@ -2,7 +2,7 @@
 
 const UrlApi = {
   GET: 'https://31.javascript.htmlacademy.pro/kekstagram/data',
-  POST: 'https://31.javascript.htmlacademy.pro/kekstagram'
+  POST: 'https://31.javascript.htmlaca demy.pro/kekstagram'
 };
 
 const Method = {
