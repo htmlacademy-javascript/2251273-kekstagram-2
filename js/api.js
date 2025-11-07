@@ -34,9 +34,7 @@ const request = (onSuccess, onError, method, body = null , url) => {
 // Функции запроса
 const getDataApi = (onSuccess, onError) => request(onSuccess, onError, Method.GET, null, BASE_URL + Route.GET);
 const sendDataApi = (onSuccess, onError, body) => request(onSuccess, onError, Method.POST, body, BASE_URL + Route.POST);
-// Функции запроса
-// const getDataApi = () => request(Route.GET);
-// const sendDataApi = (body) => request(Route.POST, Method.POST, body);
 
 // Экспорт
 export { getDataApi, sendDataApi };
+
