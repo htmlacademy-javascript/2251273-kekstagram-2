@@ -21,7 +21,7 @@ const getRandomNumber = (min, max) => {
   return inner;
 };
 
-//
+// Функция проверки нажатия клавиши Escape
 const isEscapeKey = (evt) => evt.key === 'Escape';
 // Функция проверки длины строки
 const checkLengthString = (str = '', start = 0, end = 0) => str.length >= start && str.length <= end;

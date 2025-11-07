@@ -89,16 +89,17 @@ pristine.addValidator(inputDescription, descriptionValidator, getDescriptionErro
 // Функция подключения слушателя
 const onFormSubmit = (event) => {
   event.preventDefault();
+  submitButton.disabled = true;
   if (pristine.validate()) {
     const newForm = new FormData(form);
     sendDataApi(() => {
-      console.log('success');
       modalSuccess();
       checkCloseForm(event);
+      submitButton.disabled = false;
     },
     () => {
-      console.log('error');
       modalError();
+      submitButton.disabled = false;
     },
     newForm);
 
