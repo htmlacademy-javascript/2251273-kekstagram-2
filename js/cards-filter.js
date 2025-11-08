@@ -63,4 +63,5 @@ const showFilter = () => {
 // Слушатели кликов
 onFilterButtonsClick();
 
+// Экспорт
 export {showFilter, сardsFilter };
