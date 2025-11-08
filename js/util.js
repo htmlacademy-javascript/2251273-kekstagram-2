@@ -39,6 +39,14 @@ const strToNumber = (str = '') => Number(str.split('').filter((item) => /[0-9]/.
 const getMinPercent = (total = 0, operand = 0, min = 0) => strToNumber(total) - operand < min ? min : strToNumber(total) - operand ;
 // Функция получения максимального процента
 const getMaxPercent = (total = 0, operand = 0, max = 100) => strToNumber(total) + operand > max ? max : strToNumber(total) + operand;
+//
+const debounce = (callback, timeoutDelay = 500) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
 
 // Экспорт
-export { isEscapeKey, getRandomInt, getRandomNumber, checkLengthString, getDuplicateArr, checkDuplicateArr, filterDuplicateArr, checkLengthAllItemsArr, strToNumber, getMaxPercent, getMinPercent };
+export { isEscapeKey, getRandomInt, getRandomNumber, checkLengthString, getDuplicateArr, checkDuplicateArr, filterDuplicateArr, checkLengthAllItemsArr, strToNumber, getMaxPercent, getMinPercent, debounce };
