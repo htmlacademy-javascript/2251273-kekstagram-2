@@ -1,6 +1,6 @@
 // Модуль работы с модальными окнами
 // Импорт
-import { isEscapeKey } from './util';
+import { isEscapeKey } from './util.js';
 
 // Константы
 const bodyContainer = document.querySelector('body');
