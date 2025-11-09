@@ -1,8 +1,9 @@
 // Модуль работы со слайдером
-// Константы
+// Импорт
 import { strToNumber, getMinPercent, getMaxPercent } from './util.js';
 import { getSliderSettings, getScaleSettings, getEffectsSettings } from './settigs-slider.js';
 
+// Константы
 const sliderContainer = document.querySelector('.img-upload__effect-level');
 const slider = sliderContainer.querySelector('.effect-level__slider');
 const effectsButtons = document.querySelectorAll('.effects__radio');

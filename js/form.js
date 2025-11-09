@@ -1,6 +1,6 @@
 // Модуль открытия формы
 // Импорт
-import { onEscapeClick, offEscapeClick } from './escape.js';
+import { isEscapeKey } from './util.js';
 import { setDescriptionAttribute, checkButtonSubmit, onFormSubmit, offFormSubmit } from './check-form.js';
 import { checkedEffectSlider, resetEffectSlider } from './slider.js';
 
@@ -21,9 +21,8 @@ const setFormAttributes = () => {
   form.setAttribute('action', 'https://31.javascript.htmlacademy.pro/kekstagram');
 };
 
-// Функция закрытия формы
+
 const closeForm = () => {
-  offEscapeClick();
   offFormSubmit();
   resetEffectSlider();
   imgUploadInput.value = '';
@@ -31,16 +30,34 @@ const closeForm = () => {
   textHashtags.value = '';
   form.removeEventListener('submit', onFormSubmit);
   imgUpload.classList.add('hidden');
-  imgUploadClose.removeEventListener('click', closeForm);
+};
+
+// Функция закрытия формы
+const checkCloseForm = (event) => {
+  if (isEscapeKey(event) || event.target === imgUploadClose) {
+    const modalMessage = document.querySelector('.modal-message');
+    if (!modalMessage && event.target !== inputDescription && event.target !== textHashtags) {
+      closeForm();
+
+      imgUploadClose.removeEventListener('click', checkCloseForm);
+      document.removeEventListener('keydown', checkCloseForm);
+    }
+  } else if (event instanceof SubmitEvent) {
+    closeForm();
+
+    imgUploadClose.removeEventListener('click', checkCloseForm);
+    document.removeEventListener('keydown', checkCloseForm);
+  }
 };
 
 // Функция открытия формы
 const openForm = () => {
-  onEscapeClick();
   checkedEffectSlider();
   form.addEventListener('submit', onFormSubmit);
   imgUpload.classList.remove('hidden');
-  imgUploadClose.addEventListener('click', closeForm);
+
+  imgUploadClose.addEventListener('click', checkCloseForm);
+  document.addEventListener('keydown', checkCloseForm);
 };
 
 // Слушатели
@@ -50,4 +67,4 @@ form.addEventListener('input', () => {
 });
 
 // Экспорт
-export { openForm, closeForm, setFormAttributes };
+export { openForm, checkCloseForm, setFormAttributes };

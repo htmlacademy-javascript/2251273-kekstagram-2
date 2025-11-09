@@ -1,5 +1,8 @@
 // Модуль проверки формы
 import { checkLengthString, getDuplicateArr, checkDuplicateArr, filterDuplicateArr, checkLengthAllItemsArr } from './util.js';
+import { sendDataApi } from './api.js';
+import { modalSuccess, modalError } from './modal.js';
+import { checkCloseForm } from './form.js';
 
 // Константы
 const form = document.querySelector('.img-upload__form');
@@ -84,12 +87,24 @@ pristine.addValidator(textHashtags, hashtagsValidator, getHashtagsErrorMessage);
 pristine.addValidator(inputDescription, descriptionValidator, getDescriptionErrorMessage);
 
 // Функция подключения слушателя
-const onFormSubmit = (evt) => {
-  evt.preventDefault();
+const onFormSubmit = (event) => {
+  event.preventDefault();
+  submitButton.disabled = true;
   if (pristine.validate()) {
-    return true;
+    const newForm = new FormData(form);
+    sendDataApi(() => {
+      modalSuccess();
+      checkCloseForm(event);
+      submitButton.disabled = false;
+    },
+    () => {
+      modalError();
+      submitButton.disabled = false;
+    },
+    newForm);
+
   } else {
-    return false;
+    checkButtonSubmit();
   }
 };
 
