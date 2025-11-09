@@ -11,6 +11,10 @@ const imgUploadInput = form.querySelector('.img-upload__input');
 const imgUploadClose = form.querySelector('.img-upload__cancel');
 const inputDescription = form.querySelector('.text__description');
 const textHashtags = form.querySelector('.text__hashtags');
+const uploadFile = form.querySelector('#upload-file');
+const imgUploadPreview = form.querySelector('.img-upload__preview img');
+
+const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png', 'webp'];
 
 // Функция установки атрибутов
 const setFormAttributes = () => {
@@ -60,10 +64,22 @@ const openForm = () => {
   document.addEventListener('keydown', checkCloseForm);
 };
 
-// Слушатели
-form.addEventListener('input', () => {
-  checkButtonSubmit();
-  openForm();
+// Слушатель
+uploadFile.addEventListener('change', () => {
+  const file = uploadFile.files[0];
+  const fileName = file.name.toLowerCase();
+  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+
+  if (matches) {
+    const fileImageUrl = URL.createObjectURL(file);
+    const effectItem = document.querySelectorAll('.effects__preview');
+    effectItem.forEach((item) => {
+      item.style.backgroundImage = `url('${fileImageUrl}')`;
+    });
+    checkButtonSubmit();
+    openForm();
+    imgUploadPreview.src = fileImageUrl;
+  }
 });
 
 // Экспорт
