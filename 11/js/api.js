@@ -22,7 +22,7 @@ const request = (onSuccess, onError, method, body = null , url) => {
       if (response.ok) {
         return response.json();
       } else {
-        onError(response.status);
+        throw new Error(`${response.status }: ${ response.statusText}`);
       }
     })
     .then((data) => {
