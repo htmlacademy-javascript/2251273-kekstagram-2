@@ -40,8 +40,6 @@ const closeForm = () => {
   });
   imgUpload.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  pristine.reset();
-
 };
 
 // Функция закрытия формы
@@ -61,6 +59,7 @@ const checkCloseForm = (event) => {
 
 // Функция открытия формы
 const openForm = () => {
+  pristine.reset();
   checkedEffectSlider();
   imgUpload.classList.remove('hidden');
   document.body.classList.add('modal-open');
