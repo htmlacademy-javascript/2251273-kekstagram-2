@@ -25,14 +25,6 @@ const getRandomNumber = (min, max) => {
 const isEscapeKey = (evt) => evt.key === 'Escape';
 // Функция проверки длины строки
 const checkLengthString = (str = '', start = 0, end = 0) => str.length >= start && str.length <= end;
-// Функция получения дубликатов массива
-const getDuplicateArr = (arr = []) => arr.filter((elemen, index) => arr.indexOf(elemen) !== index);
-// Проверка наличия повторяющихся элементов массива
-const checkDuplicateArr = (arr = []) => arr.length === new Set(arr).size;
-// Фильтрация повторяющихся элементов массива
-const filterDuplicateArr = (arr = []) => arr.filter((elemen, index) => arr.indexOf(elemen) === index);
-// Проверка длины всех элементов
-const checkLengthAllItemsArr = (arr = [], min = 0, max = 0) => arr.every((elemen) => elemen.length >= min && elemen.length <= max);
 // Функция извлечения цифр
 const strToNumber = (str = '') => Number(str.split('').filter((item) => /[0-9]/.test(item)).join(''));
 // Функция получения минимального процента
@@ -48,5 +40,6 @@ const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
+// getDuplicateArr, checkDuplicateArr, filterDuplicateArr, checkLengthAllItemsArr
 // Экспорт
-export { isEscapeKey, getRandomInt, getRandomNumber, checkLengthString, getDuplicateArr, checkDuplicateArr, filterDuplicateArr, checkLengthAllItemsArr, strToNumber, getMaxPercent, getMinPercent, debounce };
+export { isEscapeKey, getRandomInt, getRandomNumber, checkLengthString, strToNumber, getMaxPercent, getMinPercent, debounce };

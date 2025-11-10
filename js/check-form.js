@@ -1,8 +1,8 @@
 // Модуль проверки формы
-import { checkLengthString, getDuplicateArr, checkDuplicateArr, filterDuplicateArr, checkLengthAllItemsArr } from './util.js';
+import { checkLengthString } from './util.js';
 import { sendDataApi } from './api.js';
 import { modalSuccess, modalError } from './modal.js';
-import { checkCloseForm } from './form.js';
+import { closeForm, checkCloseForm } from './form.js';
 
 // Константы
 const form = document.querySelector('.img-upload__form');
@@ -30,6 +30,7 @@ const Limit = {
 
 // Функция проверки кнопки
 const checkButtonSubmit = () => {
+  console.log(pristine.validate());
   if (pristine.validate()) {
     submitButton.disabled = false;
   } else {
@@ -37,45 +38,37 @@ const checkButtonSubmit = () => {
   }
 };
 
+let HashtagsErrorMessage = '';
+
+const getHashtagsErrorMessage = () => HashtagsErrorMessage;
+
 // Валидатор хэштега
 const hashtagValidator = (hashtag) => {
   const regexp = /^#[a-z\u0430-\u044F\u04510-9_]*$/gi;
   return regexp.test(hashtag);
 };
 
-// Массив сообщений об ошибках
-let hashtagErrorMessages = [];
-
-// Функция получения сообщений об ошибках
-const getHashtagsErrorMessage = () => hashtagErrorMessages.join(', ');
-
 // Валидатор хэштегов
-const hashtagsValidator = (hashtags) => {
-  const hashtagsArray = hashtags.split(/[\s]+/).filter((hashtag) => hashtag.length).map((hashtag) => hashtag.toLowerCase());
-
-  hashtagErrorMessages = [];
-  let flag = true;
-
-  if (hashtagsArray.length > Limit.HASHTAGS_MAX) {
-    hashtagErrorMessages.push(`Слишком много хэштегов! (${hashtagsArray.length} / ${Limit.HASHTAGS_MAX})`);
-    flag = false;
+const hashtagsValidator = (value) => {
+  const hashtags = value.split(/\s+/).filter((item) => item.length > 0);
+  if (!hashtags.length) {
+    return true;
+  } else if (hashtags.length > Limit.HASHTAGS_MAX) {
+    HashtagsErrorMessage = `Максимум ${Limit.HASHTAGS_MAX} хэштегов!`;
+    return false;
+  } else {
+    if (hashtags.every((hashtag) => checkLengthString(hashtag, Limit.HASHTAGS_MIN_LENGTH, Limit.HASHTAGS_MAX_LENGTH))) {
+      if (hashtags.every((hashtag) => hashtagValidator(hashtag))) {
+        return true;
+      } else {
+        HashtagsErrorMessage = 'Некорректные хэштеги!';
+        return false;
+      }
+    } else {
+      HashtagsErrorMessage = 'Некорректные хэштеги!';
+      return false;
+    }
   }
-  if (hashtagsArray.some((hashtag) => !hashtagValidator(hashtag))) {
-    const wrongHashtag = hashtagsArray.filter((hashtag) => !hashtagValidator(hashtag));
-    hashtagErrorMessages.push(`Неправильный хэштег! (${filterDuplicateArr(wrongHashtag).join(', ')})`);
-    flag = false;
-  }
-  if (!checkLengthAllItemsArr(hashtagsArray, Limit.HASHTAGS_MIN_LENGTH, Limit.HASHTAGS_MAX_LENGTH)) {
-    const wrongHashtag = hashtagsArray.filter((hashtag) => !checkLengthString(hashtag, Limit.HASHTAGS_MIN_LENGTH, Limit.HASHTAGS_MAX_LENGTH));
-    hashtagErrorMessages.push(`Неправильная длина хэштега! Минимальная длина: ${Limit.HASHTAGS_MIN_LENGTH}, максимальная длина: ${Limit.HASHTAGS_MAX_LENGTH}! (${filterDuplicateArr(wrongHashtag).join(', ')})`);
-    flag = false;
-  }
-  if (!checkDuplicateArr(hashtagsArray)) {
-    const duplicateHashtag = getDuplicateArr(hashtagsArray);
-    hashtagErrorMessages.push(`Повторяющийся хэштег! (${filterDuplicateArr(duplicateHashtag).join(', ')})`);
-    flag = false;
-  }
-  return flag;
 };
 
 // Валидатор описания
@@ -87,24 +80,21 @@ pristine.addValidator(textHashtags, hashtagsValidator, getHashtagsErrorMessage);
 pristine.addValidator(inputDescription, descriptionValidator, getDescriptionErrorMessage);
 
 // Функция подключения слушателя
-const onFormSubmit = (event) => {
+const onFormSubmit = async (event) => {
   event.preventDefault();
   submitButton.disabled = true;
   if (pristine.validate()) {
     const newForm = new FormData(form);
-    sendDataApi(() => {
+    try {
+      await sendDataApi(newForm);
       modalSuccess();
-      checkCloseForm(event);
-      submitButton.disabled = false;
-    },
-    () => {
+      closeForm();
+      document.removeEventListener('keydown', checkCloseForm);
+    } catch (error) {
       modalError();
+    } finally {
       submitButton.disabled = false;
-    },
-    newForm);
-
-  } else {
-    checkButtonSubmit();
+    }
   }
 };
 
@@ -118,5 +108,9 @@ const setDescriptionAttribute = () => {
   inputDescription.setAttribute('maxlength', Limit.DESCRIPTION * 2);//!2 устанавл для проверки
 };
 
+const resetValidation = () => {
+  pristine.reset();
+};
+
 // Экспорт
-export { setDescriptionAttribute, checkButtonSubmit, onFormSubmit, offFormSubmit };
+export { setDescriptionAttribute, checkButtonSubmit, onFormSubmit, offFormSubmit, resetValidation };

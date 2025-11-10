@@ -1,7 +1,7 @@
 // Модуль открытия формы
 // Импорт
 import { isEscapeKey } from './util.js';
-import { setDescriptionAttribute, checkButtonSubmit, onFormSubmit, offFormSubmit } from './check-form.js';
+import { setDescriptionAttribute, checkButtonSubmit, onFormSubmit, offFormSubmit, resetValidation } from './check-form.js';
 import { checkedEffectSlider, resetEffectSlider } from './slider.js';
 
 // Константы
@@ -34,6 +34,8 @@ const closeForm = () => {
   textHashtags.value = '';
   form.removeEventListener('submit', onFormSubmit);
   imgUpload.classList.add('hidden');
+  document.body.classList.remove('modal-open');
+  resetValidation();
 };
 
 // Функция закрытия формы
@@ -42,13 +44,10 @@ const checkCloseForm = (event) => {
     const modalMessage = document.querySelector('.modal-message');
     if (!modalMessage && event.target !== inputDescription && event.target !== textHashtags) {
       closeForm();
-
       imgUploadClose.removeEventListener('click', checkCloseForm);
       document.removeEventListener('keydown', checkCloseForm);
     }
   } else if (event instanceof SubmitEvent) {
-    closeForm();
-
     imgUploadClose.removeEventListener('click', checkCloseForm);
     document.removeEventListener('keydown', checkCloseForm);
   }
@@ -60,6 +59,7 @@ const openForm = () => {
   form.addEventListener('submit', onFormSubmit);
   imgUpload.classList.remove('hidden');
 
+  document.body.classList.add('modal-open');
   imgUploadClose.addEventListener('click', checkCloseForm);
   document.addEventListener('keydown', checkCloseForm);
 };
@@ -83,4 +83,4 @@ uploadFile.addEventListener('change', () => {
 });
 
 // Экспорт
-export { openForm, checkCloseForm, setFormAttributes };
+export { openForm, closeForm, checkCloseForm, setFormAttributes };

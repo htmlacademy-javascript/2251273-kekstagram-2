@@ -1,9 +1,8 @@
 // Модуль работы с фильтрами
 // Импорт
 import { debounce } from './util.js';
-import { getDataApi } from './api.js';
 import { renderCards, clearCards } from './cards.js';
-import { showMessageLoadError } from './message.js';
+import { getDataCards } from './data.js';
 
 // Константы
 const imgFilters = document.querySelector('.img-filters');
@@ -24,7 +23,7 @@ const FilterCards = {
 const сardsFilter = (cards) => {
   const filterId = document.querySelector('.img-filters__button--active').id;
   if (filterId === 'filter-default') {
-    return FilterCards.DEFAULT(cards);
+    return getDataCards();
   } else if (filterId === 'filter-random') {
     return FilterCards.RANDOM(cards);
   } else if (filterId === 'filter-discussed') {
@@ -35,7 +34,8 @@ const сardsFilter = (cards) => {
 // Функция обновления фильтра без задержки
 const updateFilter = () => {
   clearCards();
-  getDataApi(renderCards, showMessageLoadError);
+  const cards = getDataCards();
+  renderCards(cards);
 };
 
 // Функция обновления фильтра с задержкой
