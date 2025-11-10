@@ -1,8 +1,8 @@
 // Модуль работы с фильтрами
 // Импорт
-import { debounce } from './util.js';
+import { debounce, throttle } from './util.js';
 import { renderCards, clearCards } from './cards.js';
-import { getDataCards } from './data.js';
+// import { getDataCards } from './data.js';
 
 // Константы
 const imgFilters = document.querySelector('.img-filters');
@@ -23,7 +23,7 @@ const FilterCards = {
 const сardsFilter = (cards) => {
   const filterId = document.querySelector('.img-filters__button--active').id;
   if (filterId === 'filter-default') {
-    return getDataCards();
+    return FilterCards.DEFAULT(cards);
   } else if (filterId === 'filter-random') {
     return FilterCards.RANDOM(cards);
   } else if (filterId === 'filter-discussed') {
@@ -34,12 +34,13 @@ const сardsFilter = (cards) => {
 // Функция обновления фильтра без задержки
 const updateFilter = () => {
   clearCards();
-  const cards = getDataCards();
-  renderCards(cards);
+  // const cards = getDataCards();
+  renderCards();
 };
 
 // Функция обновления фильтра с задержкой
 const updateFilterDebounce = debounce(updateFilter, FilterSetings.DEDONCE_TIME);
+const updateFilterThrottle = throttle(updateFilter, FilterSetings.DEDONCE_TIME);
 
 // Функция добавления слушателя
 const onFilterButtonsClick = () => {
@@ -49,7 +50,7 @@ const onFilterButtonsClick = () => {
         item.classList.remove('img-filters__button--active');
       });
       button.classList.add('img-filters__button--active');
-      updateFilterDebounce();
+      updateFilterThrottle();
     });
   });
 };

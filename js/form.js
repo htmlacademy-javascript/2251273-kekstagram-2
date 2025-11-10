@@ -1,8 +1,10 @@
 // Модуль открытия формы
 // Импорт
 import { isEscapeKey } from './util.js';
-import { setDescriptionAttribute, checkButtonSubmit, onFormSubmit, offFormSubmit, resetValidation } from './check-form.js';
+import { pristine } from './form-validate.js';
 import { checkedEffectSlider, resetEffectSlider } from './slider.js';
+import { modalSuccess, modalError } from './modal.js';
+import { sendDataApi } from './api.js';
 
 // Константы
 const form = document.querySelector('.img-upload__form');
@@ -13,12 +15,13 @@ const inputDescription = form.querySelector('.text__description');
 const textHashtags = form.querySelector('.text__hashtags');
 const uploadFile = form.querySelector('#upload-file');
 const imgUploadPreview = form.querySelector('.img-upload__preview img');
+const submitButton = form.querySelector('.img-upload__submit');
+const effectItem = document.querySelectorAll('.effects__preview');
 
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png', 'webp'];
 
 // Функция установки атрибутов
 const setFormAttributes = () => {
-  setDescriptionAttribute();
   form.setAttribute('autocomplete', 'off');
   form.setAttribute('method', 'post');
   form.setAttribute('enctype', 'multipart/form-data');
@@ -27,15 +30,18 @@ const setFormAttributes = () => {
 
 
 const closeForm = () => {
-  offFormSubmit();
+
   resetEffectSlider();
   imgUploadInput.value = '';
   inputDescription.value = '';
   textHashtags.value = '';
-  form.removeEventListener('submit', onFormSubmit);
+  effectItem.forEach((item) => {
+    item.style.backgroundImage = '';
+  });
   imgUpload.classList.add('hidden');
   document.body.classList.remove('modal-open');
-  resetValidation();
+  pristine.reset();
+
 };
 
 // Функция закрытия формы
@@ -56,31 +62,66 @@ const checkCloseForm = (event) => {
 // Функция открытия формы
 const openForm = () => {
   checkedEffectSlider();
-  form.addEventListener('submit', onFormSubmit);
   imgUpload.classList.remove('hidden');
-
   document.body.classList.add('modal-open');
   imgUploadClose.addEventListener('click', checkCloseForm);
   document.addEventListener('keydown', checkCloseForm);
 };
 
-// Слушатель
-uploadFile.addEventListener('change', () => {
-  const file = uploadFile.files[0];
-  const fileName = file.name.toLowerCase();
-  const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
-
-  if (matches) {
-    const fileImageUrl = URL.createObjectURL(file);
-    const effectItem = document.querySelectorAll('.effects__preview');
-    effectItem.forEach((item) => {
-      item.style.backgroundImage = `url('${fileImageUrl}')`;
-    });
-    checkButtonSubmit();
-    openForm();
-    imgUploadPreview.src = fileImageUrl;
+const checkValidForm = () => {
+  if (pristine.validate()) {
+    submitButton.disabled = false;
+  } else {
+    submitButton.disabled = true;
   }
+};
+
+const onFormChange = () => {
+  setFormAttributes();
+  uploadFile.addEventListener('change', () => {
+    const file = uploadFile.files[0];
+    const fileName = file.name.toLowerCase();
+    const matches = FILE_TYPES.some((it) => fileName.endsWith(it));
+
+    checkValidForm();
+
+    if (matches) {
+      const fileImageUrl = URL.createObjectURL(file);
+      effectItem.forEach((item) => {
+        item.style.backgroundImage = `url('${fileImageUrl}')`;
+      });
+      openForm();
+      imgUploadPreview.src = fileImageUrl;
+    }
+  });
+};
+
+const formSubmit = async (event) => {
+  event.preventDefault();
+  if (pristine.validate()) {
+    submitButton.disabled = true;
+    const newForm = new FormData(form);
+    try {
+      await sendDataApi(newForm);
+      closeForm();
+      form.reset();
+      pristine.reset();
+      modalSuccess();
+    } catch (error) {
+      modalError();
+    } finally {
+      submitButton.disabled = false;
+    }
+  }
+};
+
+form.addEventListener('submit', (event) => {
+  event.preventDefault();
+  formSubmit(event);
 });
 
+textHashtags.addEventListener('input', checkValidForm);
+inputDescription.addEventListener('input', checkValidForm);
+
 // Экспорт
-export { openForm, closeForm, checkCloseForm, setFormAttributes };
+export { onFormChange, openForm, closeForm, checkCloseForm };

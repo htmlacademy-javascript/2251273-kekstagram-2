@@ -1,11 +1,11 @@
 // Модуль главного скрипта
 // Импорт
-// import { renderCards } from './cards.js';
-import { setFormAttributes } from './form.js';
 import { getDataApi } from './api.js';
 import { showMessageLoadError } from './message.js';
 import { setDataCards } from './data.js';
 import { renderCards } from './cards.js';
+import { onFormChange } from './form.js';
+
 
 // Получаем карточки
 (async () => {
@@ -18,6 +18,4 @@ import { renderCards } from './cards.js';
   }
 })();
 
-
-// Установка атрибутов формы
-setFormAttributes();
+onFormChange();
