@@ -21,4 +21,3 @@ const sendDataApi = (body) => request(Method.POST, body, BASE_URL + Route.POST);
 
 // Экспорт
 export { getDataApi, sendDataApi };
-

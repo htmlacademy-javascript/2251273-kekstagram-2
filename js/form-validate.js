@@ -8,9 +8,12 @@ const description = form.querySelector('.text__description');
 
 // Пристина))
 const pristine = new Pristine(form, {
+  // classTo: 'img-upload__field-wrapper',
+  // errorClass: 'img-upload__field-wrapper--error',
+  // errorTextParent: 'img-upload__field-wrapper',
   classTo: 'img-upload__field-wrapper',
-  errorClass: 'img-upload__field-wrapper--error',
   errorTextParent: 'img-upload__field-wrapper',
+  errorTextClass: 'img-upload__field-wrapper--error'
 });
 
 // Константы
@@ -67,6 +70,7 @@ const hashtagsValidator = (value) => {
   }
 };
 
+// Валидатор описания
 const descriptionValidator = (value) => {
   if (value.length > Limit.DESCRIPTION) {
     return {
@@ -86,16 +90,19 @@ const setDescriptionAttribute = () => {
   description.setAttribute('maxlength', Limit.DESCRIPTION * 2);//!2 устанавл для проверки
 };
 
+// Валидатор хэштегов
 const validateHashtags = (value) => hashtagsValidator(value).valid;
 const messageErrorHashtags = (value) => hashtagsValidator(value).message;
 
+// Валидатор описания
 const validateDescription = (value) => descriptionValidator(value).valid;
 const messageErrorDescription = (value) => descriptionValidator(value).message;
 
+// Добавление валидаторов
 pristine.addValidator(hashtags, validateHashtags, messageErrorHashtags);
 pristine.addValidator(description, validateDescription, messageErrorDescription);
 
-
+// Установка атрибута
 setDescriptionAttribute();
 
 // Экспорт

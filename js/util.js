@@ -55,6 +55,5 @@ const throttle = (callback, timeoutDelay = 500) => {
   };
 };
 
-// getDuplicateArr, checkDuplicateArr, filterDuplicateArr, checkLengthAllItemsArr
 // Экспорт
 export { isEscapeKey, getRandomInt, getRandomNumber, checkLengthString, checkDuplicateArr, strToNumber, getMaxPercent, getMinPercent, debounce, throttle };

@@ -28,9 +28,8 @@ const setFormAttributes = () => {
   form.setAttribute('action', 'https://31.javascript.htmlacademy.pro/kekstagram');
 };
 
-
+// Функция закрытия формы
 const closeForm = () => {
-
   resetEffectSlider();
   imgUploadInput.value = '';
   inputDescription.value = '';
@@ -42,7 +41,7 @@ const closeForm = () => {
   document.body.classList.remove('modal-open');
 };
 
-// Функция закрытия формы
+// Функция проверки закрытия формы
 const checkCloseForm = (event) => {
   if (isEscapeKey(event) || event.target === imgUploadClose) {
     const modalMessage = document.querySelector('.modal-message');
@@ -113,6 +112,7 @@ const formSubmit = async (event) => {
     }
   }
 };
+
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();

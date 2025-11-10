@@ -30,7 +30,7 @@ const FilterCards = {
   },
 };
 
-// Функция фильтрации карточек
+// Функция обновления карточек
 const updateCards = () => {
   const filterId = document.querySelector('.img-filters__button--active').id;
   const cards = structuredClone(getDataCards());
@@ -46,19 +46,6 @@ const updateCards = () => {
 // Функция обновления фильтра с задержкой
 const updateFilterDebounce = debounce(updateCards, FilterSetings.DEDONCE_TIME);
 
-// Функция добавления слушателя
-const onFilterButtonsClick = () => {
-  filterButtons.forEach((button) => {
-    button.addEventListener('click', () => {
-      filterButtons.forEach((item) => {
-        item.classList.remove('img-filters__button--active');
-      });
-      button.classList.add('img-filters__button--active');
-      updateFilterDebounce();
-    });
-  });
-};
-
 // Функции открытия  фильтра
 const showFilter = () => {
   imgFilters.classList.remove('img-filters--inactive');
@@ -66,7 +53,15 @@ const showFilter = () => {
 };
 
 // Слушатели кликов
-onFilterButtonsClick();
+filterButtons.forEach((button) => {
+  button.addEventListener('click', () => {
+    filterButtons.forEach((item) => {
+      item.classList.remove('img-filters__button--active');
+    });
+    button.classList.add('img-filters__button--active');
+    updateFilterDebounce();
+  });
+});
 
 // Экспорт
 export { showFilter };
