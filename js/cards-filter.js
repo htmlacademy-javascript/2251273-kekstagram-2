@@ -1,8 +1,8 @@
 // Модуль работы с фильтрами
 // Импорт
-import { debounce, throttle } from './util.js';
+import { debounce } from './util.js';
 import { renderCards, clearCards } from './cards.js';
-// import { getDataCards } from './data.js';
+import { getDataCards } from './data.js';
 
 // Константы
 const imgFilters = document.querySelector('.img-filters');
@@ -14,33 +14,37 @@ const FilterSetings = {
 };
 
 const FilterCards = {
-  DEFAULT: (cards) => cards,
-  RANDOM: (cards) => cards.sort(() => Math.random() - 0.5).slice(0, FilterSetings.RANDOM_COUNT),
-  DISCUSSED: (cards) => cards.sort((a, b) => b.comments.length - a.comments.length),
+  DEFAULT: (cards) => {
+    clearCards();
+    renderCards(cards);
+  },
+  RANDOM: (cards) => {
+    const randomCards = cards.sort(() => Math.random() - 0.5).slice(0, FilterSetings.RANDOM_COUNT);
+    clearCards();
+    renderCards(randomCards);
+  },
+  DISCUSSED: (cards) => {
+    const discussedCards = cards.sort((a, b) => b.comments.length - a.comments.length);
+    clearCards();
+    renderCards(discussedCards);
+  },
 };
 
 // Функция фильтрации карточек
-const сardsFilter = (cards) => {
+const updateCards = () => {
   const filterId = document.querySelector('.img-filters__button--active').id;
+  const cards = structuredClone(getDataCards());
   if (filterId === 'filter-default') {
-    return FilterCards.DEFAULT(cards);
+    FilterCards.DEFAULT(cards);
   } else if (filterId === 'filter-random') {
-    return FilterCards.RANDOM(cards);
+    FilterCards.RANDOM(cards);
   } else if (filterId === 'filter-discussed') {
-    return FilterCards.DISCUSSED(cards);
+    FilterCards.DISCUSSED(cards);
   }
 };
 
-// Функция обновления фильтра без задержки
-const updateFilter = () => {
-  clearCards();
-  // const cards = getDataCards();
-  renderCards();
-};
-
 // Функция обновления фильтра с задержкой
-const updateFilterDebounce = debounce(updateFilter, FilterSetings.DEDONCE_TIME);
-const updateFilterThrottle = throttle(updateFilter, FilterSetings.DEDONCE_TIME);
+const updateFilterDebounce = debounce(updateCards, FilterSetings.DEDONCE_TIME);
 
 // Функция добавления слушателя
 const onFilterButtonsClick = () => {
@@ -50,7 +54,7 @@ const onFilterButtonsClick = () => {
         item.classList.remove('img-filters__button--active');
       });
       button.classList.add('img-filters__button--active');
-      updateFilterThrottle();
+      updateFilterDebounce();
     });
   });
 };
@@ -65,4 +69,4 @@ const showFilter = () => {
 onFilterButtonsClick();
 
 // Экспорт
-export {showFilter, сardsFilter };
+export { showFilter };

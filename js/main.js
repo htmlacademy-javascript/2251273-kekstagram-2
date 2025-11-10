@@ -12,7 +12,7 @@ import { onFormChange } from './form.js';
   try {
     const cards = await getDataApi();
     setDataCards(cards);
-    renderCards();
+    renderCards(cards);
   } catch (error) {
     showMessageLoadError();
   }
