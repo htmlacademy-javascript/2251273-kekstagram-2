@@ -13,7 +13,7 @@ const Method = {
 };
 
 // Функция запроса
-const request = (method, body, url) => fetch(url, { method, body}).then((response) => response.json())
+const request = (method, body, url) => fetch(url, { method, body}).then((response) => response.json());
 
 // Функции запроса
 const getDataApi = () => request(Method.GET, null, BASE_URL + Route.GET);
