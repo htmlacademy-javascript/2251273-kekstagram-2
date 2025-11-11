@@ -1,13 +1,21 @@
 // Модуль главного скрипта
 // Импорт
-import { renderCards } from './cards.js';
-import { setFormAttributes } from './form.js';
 import { getDataApi } from './api.js';
 import { showMessageLoadError } from './message.js';
+import { setDataCards } from './data.js';
+import { renderCards } from './cards.js';
+import { onFormChange } from './form.js';
 
 
-// Отрисовка карточек
-getDataApi(renderCards, showMessageLoadError);
+// Получаем карточки
+(async () => {
+  try {
+    const cards = await getDataApi();
+    setDataCards(cards);
+    renderCards(cards);
+  } catch (error) {
+    showMessageLoadError();
+  }
+})();
 
-// Установка атрибутов формы
-setFormAttributes();
+onFormChange();

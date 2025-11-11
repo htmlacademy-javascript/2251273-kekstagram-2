@@ -13,28 +13,12 @@ const Method = {
 };
 
 // Функция запроса
-const request = (onSuccess, onError, method, body = null , url) => {
-  fetch(url, {
-    method: method,
-    body: body
-  })
-    .then((response) => {
-      if (response.ok) {
-        return response.json();
-      } else {
-        throw new Error(`${response.status }: ${ response.statusText}`);
-      }
-    })
-    .then((data) => {
-      onSuccess(data);
-    })
-    .catch(onError);
-};
+const request = (method, body, url) => fetch(url, { method, body}).then((response) => response.json());
 
 // Функции запроса
-const getDataApi = (onSuccess, onError) => request(onSuccess, onError, Method.GET, null, BASE_URL + Route.GET);
-const sendDataApi = (onSuccess, onError, body) => request(onSuccess, onError, Method.POST, body, BASE_URL + Route.POST);
+const getDataApi = () => request(Method.GET, null, BASE_URL + Route.GET);
+const sendDataApi = (body) => request(Method.POST, body, BASE_URL + Route.POST);
+
 
 // Экспорт
 export { getDataApi, sendDataApi };
-

@@ -1,6 +1,7 @@
 // Модуль отрисовки карточек
 // Импорт
 import { openBigPicture } from './big-picture.js';
+import { showFilter } from './cards-filter.js';
 
 // Константы
 const сardsСontainer = document.querySelector('.pictures');
@@ -31,9 +32,17 @@ const renderCard = (card) => {
   return fragment;
 };
 
+const clearCards = () => {
+  const cards = document.querySelectorAll('.picture');
+  cards.forEach((card) => {
+    card.remove();
+  });
+};
+
 // Функция отрисовки всех карточек
 const renderCards = (cards) => {
   const fragment = document.createDocumentFragment();
+  showFilter();
 
   cards.forEach((element) => {
     fragment.appendChild(renderCard(element));
@@ -43,4 +52,4 @@ const renderCards = (cards) => {
 };
 
 // Экспорт
-export { renderCards };
+export { renderCards, clearCards };

@@ -25,20 +25,35 @@ const getRandomNumber = (min, max) => {
 const isEscapeKey = (evt) => evt.key === 'Escape';
 // Функция проверки длины строки
 const checkLengthString = (str = '', start = 0, end = 0) => str.length >= start && str.length <= end;
-// Функция получения дубликатов массива
-const getDuplicateArr = (arr = []) => arr.filter((elemen, index) => arr.indexOf(elemen) !== index);
-// Проверка наличия повторяющихся элементов массива
-const checkDuplicateArr = (arr = []) => arr.length === new Set(arr).size;
-// Фильтрация повторяющихся элементов массива
-const filterDuplicateArr = (arr = []) => arr.filter((elemen, index) => arr.indexOf(elemen) === index);
-// Проверка длины всех элементов
-const checkLengthAllItemsArr = (arr = [], min = 0, max = 0) => arr.every((elemen) => elemen.length >= min && elemen.length <= max);
 // Функция извлечения цифр
 const strToNumber = (str = '') => Number(str.split('').filter((item) => /[0-9]/.test(item)).join(''));
+// Функция проверки наличия дубликатов в массиве
+const checkDuplicateArr = (arr = []) => {
+  arr = arr.map((item) => item.toLowerCase());
+  return arr.length !== new Set(arr).size;
+};
 // Функция получения минимального процента
 const getMinPercent = (total = 0, operand = 0, min = 0) => strToNumber(total) - operand < min ? min : strToNumber(total) - operand ;
 // Функция получения максимального процента
 const getMaxPercent = (total = 0, operand = 0, max = 100) => strToNumber(total) + operand > max ? max : strToNumber(total) + operand;
+//
+const debounce = (callback, timeoutDelay = 500) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => callback.apply(this, rest), timeoutDelay);
+  };
+};
+
+const throttle = (callback, timeoutDelay = 500) => {
+  let timeoutId;
+  return (...rest) => {
+    clearTimeout(timeoutId);
+    timeoutId = setTimeout(() => {
+      callback.apply(this, rest);
+    }, timeoutDelay);
+  };
+};
 
 // Экспорт
-export { isEscapeKey, getRandomInt, getRandomNumber, checkLengthString, getDuplicateArr, checkDuplicateArr, filterDuplicateArr, checkLengthAllItemsArr, strToNumber, getMaxPercent, getMinPercent };
+export { isEscapeKey, getRandomInt, getRandomNumber, checkLengthString, checkDuplicateArr, strToNumber, getMaxPercent, getMinPercent, debounce, throttle };
