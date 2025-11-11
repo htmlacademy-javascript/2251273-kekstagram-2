@@ -19,6 +19,5 @@ const request = (method, body, url) => fetch(url, { method, body}).then((respons
 const getDataApi = () => request(Method.GET, null, BASE_URL + Route.GET);
 const sendDataApi = (body) => request(Method.POST, body, BASE_URL + Route.POST);
 
-
 // Экспорт
 export { getDataApi, sendDataApi };
