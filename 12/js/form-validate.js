@@ -8,9 +8,6 @@ const description = form.querySelector('.text__description');
 
 // Пристина))
 const pristine = new Pristine(form, {
-  // classTo: 'img-upload__field-wrapper',
-  // errorClass: 'img-upload__field-wrapper--error',
-  // errorTextParent: 'img-upload__field-wrapper',
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper--error'
