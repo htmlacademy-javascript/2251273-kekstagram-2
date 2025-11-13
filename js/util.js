@@ -1,7 +1,5 @@
 const isEscapeKey = (evt) => evt.key === 'Escape';
 
-const checkLengthString = (str = '', start = 0, end = 0) => str.length >= start && str.length <= end;
-
 const strToNumber = (str = '') => Number(str.split('').filter((item) => /[0-9]/.test(item)).join(''));
 
 const checkDuplicateArr = (arr = []) => {
@@ -21,4 +19,4 @@ const debounce = (callback, timeoutDelay = 500) => {
   };
 };
 
-export { isEscapeKey, checkLengthString, checkDuplicateArr, strToNumber, getMaxPercent, getMinPercent, debounce };
+export { isEscapeKey, checkDuplicateArr, strToNumber, getMaxPercent, getMinPercent, debounce };
