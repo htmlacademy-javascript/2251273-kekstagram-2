@@ -1,9 +1,6 @@
-// Модуль открытия большого изображения
-// Импорт
 import { isEscapeKey } from './util.js';
 import { renderComments } from './comments.js';
 
-// Константы
 const bigPicture = document.querySelector('.big-picture');
 const bigPictureImage = bigPicture.querySelector('.big-picture__img img');
 const bigPictureSocial = bigPicture.querySelector('.big-picture__social');
@@ -13,7 +10,6 @@ const likesCount = bigPictureSocial.querySelector('.likes-count');
 const bigPictureCancel = bigPicture.querySelector('.big-picture__cancel');
 const socialCommentInput = bigPicture.querySelector('.social__footer-text');
 
-// Функция очистки большого изображения
 const clearBigPicture = () => {
   bigPictureImage.src = '';
   bigPictureImage.alt = '';
@@ -22,7 +18,6 @@ const clearBigPicture = () => {
   socialCaption.textContent = '';
 };
 
-// Функция закрытия большого изображения
 const closeBigPicture = (event) => {
   if (isEscapeKey(event) && event.target !== socialCommentInput || event.target === bigPictureCancel) {
     clearBigPicture();
@@ -32,7 +27,6 @@ const closeBigPicture = (event) => {
   }
 };
 
-// Функция открытия большого изображения
 const openBigPicture = (card) => {
   clearBigPicture();
   bigPictureImage.src = card.url;
@@ -48,5 +42,4 @@ const openBigPicture = (card) => {
   document.addEventListener('keydown', closeBigPicture);
 };
 
-// Экспорт
 export { openBigPicture, closeBigPicture };
