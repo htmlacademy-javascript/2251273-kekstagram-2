@@ -1,19 +1,15 @@
-// Модуль проверки формы
 import { checkDuplicateArr } from './util.js';
 
-// Константы
 const form = document.querySelector('.img-upload__form');
 const hashtags = form.querySelector('.text__hashtags');
 const description = form.querySelector('.text__description');
 
-// Пристина))
 const pristine = new Pristine(form, {
   classTo: 'img-upload__field-wrapper',
   errorTextParent: 'img-upload__field-wrapper',
   errorTextClass: 'img-upload__field-wrapper--error'
 });
 
-// Константы
 const Limit = {
   DESCRIPTION: 140,
   HASHTAGS_MIN_LENGTH: 2,
@@ -21,7 +17,6 @@ const Limit = {
   HASHTAGS_MAX: 5,
 };
 
-// Валидатор хэштегов
 const hashtagsValidator = (value) => {
   const hashtagsArray = value.split(/\s+/).filter((item) => item.length > 0).map((item) => item.toLowerCase());
   if (hashtagsArray.length === 0) {
@@ -67,7 +62,6 @@ const hashtagsValidator = (value) => {
   }
 };
 
-// Валидатор описания
 const descriptionValidator = (value) => {
   if (value.length > Limit.DESCRIPTION) {
     return {
@@ -82,26 +76,19 @@ const descriptionValidator = (value) => {
   }
 };
 
-// Функция установки атрибута
 const setDescriptionAttribute = () => {
-  description.setAttribute('maxlength', Limit.DESCRIPTION * 2);//!2 устанавл для проверки
+  description.setAttribute('maxlength', Limit.DESCRIPTION);
 };
 
-// Валидатор хэштегов
 const validateHashtags = (value) => hashtagsValidator(value).valid;
 const messageErrorHashtags = (value) => hashtagsValidator(value).message;
 
-// Валидатор описания
 const validateDescription = (value) => descriptionValidator(value).valid;
 const messageErrorDescription = (value) => descriptionValidator(value).message;
 
-// Добавление валидаторов
 pristine.addValidator(hashtags, validateHashtags, messageErrorHashtags);
 pristine.addValidator(description, validateDescription, messageErrorDescription);
 
-// Установка атрибута
 setDescriptionAttribute();
 
-// Экспорт
 export { pristine };
-
