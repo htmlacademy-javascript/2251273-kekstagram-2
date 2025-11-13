@@ -1,10 +1,7 @@
-// Модуль работы с фильтрами
-// Импорт
 import { debounce } from './util.js';
 import { renderCards, clearCards } from './cards.js';
 import { getDataCards } from './data.js';
 
-// Константы
 const imgFilters = document.querySelector('.img-filters');
 const filterButtons = imgFilters.querySelectorAll('.img-filters__button');
 
@@ -30,7 +27,6 @@ const FilterCards = {
   },
 };
 
-// Функция обновления карточек
 const updateCards = () => {
   const filterId = document.querySelector('.img-filters__button--active').id;
   const cards = structuredClone(getDataCards());
@@ -43,16 +39,13 @@ const updateCards = () => {
   }
 };
 
-// Функция обновления фильтра с задержкой
 const updateFilterDebounce = debounce(updateCards, FilterSetings.DEDONCE_TIME);
 
-// Функции открытия  фильтра
 const showFilter = () => {
   imgFilters.classList.remove('img-filters--inactive');
   imgFilters.classList.add('img-filters--active');
 };
 
-// Слушатели кликов
 filterButtons.forEach((button) => {
   button.addEventListener('click', () => {
     filterButtons.forEach((item) => {
@@ -63,5 +56,4 @@ filterButtons.forEach((button) => {
   });
 });
 
-// Экспорт
 export { showFilter };

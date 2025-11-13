@@ -1,13 +1,9 @@
-// Модуль отрисовки коментариев
-
-// Константы
 const socialCommentCounter = document.querySelector('.social__comment-count');
 const commentShownCount = socialCommentCounter.querySelector('.social__comment-shown-count');
 const commentTotalCount = socialCommentCounter.querySelector('.social__comment-total-count');
 const socialommentsList = document.querySelector('.social__comments');
 const commentsLoader = document.querySelector('.social__comments-loader');
 
-// Коментарии
 const Comments = {
   SHOW: 0,
   TOTAL: 0,
@@ -15,7 +11,6 @@ const Comments = {
   DATA: [],
 };
 
-// Функция проверки кнопки загрузки
 const checkLoader = () => {
   if (Comments.SHOW >= Comments.TOTAL) {
     commentsLoader.classList.add('hidden');
@@ -24,13 +19,11 @@ const checkLoader = () => {
   }
 };
 
-// Функция сброса коментариев
 const resetComments = () => {
   Comments.SHOW = 0;
   Comments.TOTAL = 0;
 };
 
-// Функция отрисовки коментария
 const renderComment = (comment) => {
   const fragment = document.createDocumentFragment();
 
@@ -56,7 +49,6 @@ const renderComment = (comment) => {
 
 };
 
-// Функция показа коментариев
 const showComments = () => {
   const visibleComments = Comments.DATA.slice((Comments.SHOW % Comments.STEP) ? (Comments.SHOW - Comments.SHOW % Comments.STEP) : Comments.SHOW - Comments.STEP , Comments.SHOW);
   const fragment = document.createDocumentFragment();
@@ -66,7 +58,6 @@ const showComments = () => {
   socialommentsList.appendChild(fragment);
 };
 
-// Функция проверки списка коментариев
 const checkComentsLength = () => {
   Comments.TOTAL = Comments.DATA.length;
   if (Comments.TOTAL < Comments.STEP + Comments.SHOW) {
@@ -81,20 +72,16 @@ const checkComentsLength = () => {
   commentShownCount.textContent = Comments.SHOW;
 };
 
-// Функция отрисовки коментариев
 const renderComments = (comments) => {
   Comments.DATA = comments;
   resetComments();
   checkComentsLength();
 };
 
-// Функция загрузки коментариев
 const onLoaderClick = () => {
   checkComentsLength();
 };
 
-// Функция добавления обработчика
 commentsLoader.addEventListener('click', onLoaderClick);
 
-// Экспорт
 export { renderComments };

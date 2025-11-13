@@ -76,10 +76,6 @@ const descriptionValidator = (value) => {
   }
 };
 
-const setDescriptionAttribute = () => {
-  description.setAttribute('maxlength', Limit.DESCRIPTION);
-};
-
 const validateHashtags = (value) => hashtagsValidator(value).valid;
 const messageErrorHashtags = (value) => hashtagsValidator(value).message;
 
@@ -88,7 +84,5 @@ const messageErrorDescription = (value) => descriptionValidator(value).message;
 
 pristine.addValidator(hashtags, validateHashtags, messageErrorHashtags);
 pristine.addValidator(description, validateDescription, messageErrorDescription);
-
-setDescriptionAttribute();
 
 export { pristine };

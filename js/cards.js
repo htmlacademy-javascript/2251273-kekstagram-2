@@ -1,13 +1,9 @@
-// Модуль отрисовки карточек
-// Импорт
 import { openBigPicture } from './big-picture.js';
 import { showFilter } from './cards-filter.js';
 
-// Константы
 const сardsСontainer = document.querySelector('.pictures');
 const cardTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
-// Функция отрисовки карточки
 const renderCard = (card) => {
   const fragment = document.createDocumentFragment();
 
@@ -16,11 +12,11 @@ const renderCard = (card) => {
   const cardComments = cardElement.querySelector('.picture__comments');
   const cardLikes = cardElement.querySelector('.picture__likes');
 
-  cardPicture.src = card.url; //Адрес изображения
-  cardPicture.alt = card.description; //Описание изображения
+  cardPicture.src = card.url;
+  cardPicture.alt = card.description;
   cardPicture.dataset.id = card.id;
-  cardComments.textContent = card.comments.length;//Количество комментариев
-  cardLikes.textContent = card.likes;//Количество лайков
+  cardComments.textContent = card.comments.length;
+  cardLikes.textContent = card.likes;
 
   cardElement.addEventListener('click', (evt) => {
     evt.preventDefault();
@@ -39,7 +35,6 @@ const clearCards = () => {
   });
 };
 
-// Функция отрисовки всех карточек
 const renderCards = (cards) => {
   const fragment = document.createDocumentFragment();
   showFilter();
@@ -51,5 +46,4 @@ const renderCards = (cards) => {
   сardsСontainer.appendChild(fragment);
 };
 
-// Экспорт
 export { renderCards, clearCards };

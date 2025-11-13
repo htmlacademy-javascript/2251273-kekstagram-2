@@ -1,12 +1,9 @@
-// Модуль открытия формы
-// Импорт
 import { isEscapeKey } from './util.js';
 import { pristine } from './form-validate.js';
 import { checkedEffectSlider, resetEffectSlider } from './slider.js';
 import { modalSuccess, modalError } from './modal.js';
 import { sendDataApi } from './api.js';
 
-// Константы
 const form = document.querySelector('.img-upload__form');
 const imgUpload = form.querySelector('.img-upload__overlay');
 const imgUploadInput = form.querySelector('.img-upload__input');
@@ -20,7 +17,6 @@ const effectItem = document.querySelectorAll('.effects__preview');
 
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png', 'webp'];
 
-// Функция установки атрибутов
 const setFormAttributes = () => {
   form.setAttribute('autocomplete', 'off');
   form.setAttribute('method', 'post');
@@ -28,7 +24,6 @@ const setFormAttributes = () => {
   form.setAttribute('action', 'https://31.javascript.htmlacademy.pro/kekstagram');
 };
 
-// Функция закрытия формы
 const closeForm = () => {
   resetEffectSlider();
   imgUploadInput.value = '';
@@ -41,7 +36,6 @@ const closeForm = () => {
   document.body.classList.remove('modal-open');
 };
 
-// Функция проверки закрытия формы
 const checkCloseForm = (event) => {
   if (isEscapeKey(event) || event.target === imgUploadClose) {
     const modalMessage = document.querySelector('.modal-message');
@@ -56,7 +50,6 @@ const checkCloseForm = (event) => {
   }
 };
 
-// Функция открытия формы
 const openForm = () => {
   pristine.reset();
   checkedEffectSlider();
@@ -67,11 +60,7 @@ const openForm = () => {
 };
 
 const checkValidForm = () => {
-  if (pristine.validate()) {
-    submitButton.disabled = false;
-  } else {
-    submitButton.disabled = true;
-  }
+  submitButton.disabled = !pristine.validate();
 };
 
 const onFormChange = () => {
@@ -122,5 +111,4 @@ form.addEventListener('submit', (event) => {
 textHashtags.addEventListener('input', checkValidForm);
 inputDescription.addEventListener('input', checkValidForm);
 
-// Экспорт
 export { onFormChange, openForm, closeForm, checkCloseForm };
