@@ -1,7 +1,4 @@
-// Модуль настроек работы со слайдером
-
-// Константы
-const SliderSettings = {
+const sliderSettings = {
   none: {
     range: {
       min: 0,
@@ -67,12 +64,8 @@ const EffectsSettings = {
   heat: (value) => `brightness(${value})`,
 };
 
-// Функция получения настроек слайдера
-const getSliderSettings = () => SliderSettings;
-// Функция получения настроек размера изображения
+const getSliderSettings = () => sliderSettings;
 const getScaleSettings = () => ScaleSettings;
-// Функция получения настроек эффектов
 const getEffectsSettings = () => EffectsSettings;
 
-// Экспорт
 export { getSliderSettings, getScaleSettings, getEffectsSettings };
