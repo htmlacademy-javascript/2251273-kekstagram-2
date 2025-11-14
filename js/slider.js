@@ -1,15 +1,16 @@
 import { strToNumber, getMinPercent, getMaxPercent } from './util.js';
 import { getSliderSettings, getScaleSettings, getEffectsSettings } from './settigs-slider.js';
 
-const sliderContainer = document.querySelector('.img-upload__effect-level');
-const slider = sliderContainer.querySelector('.effect-level__slider');
-const effectsButtons = document.querySelectorAll('.effects__radio');
-const effectsButtonNone = document.querySelector('#effect-none');
-const imgUploadPreview = document.querySelector('.img-upload__preview img');
-const effectValue = document.querySelector('.effect-level__value');
-const scaleControlValue = document.querySelector('.scale__control--value');
-const buttonSmaller = document.querySelector('.scale__control--smaller');
-const buttonBigger = document.querySelector('.scale__control--bigger');
+const form = document.querySelector('.img-upload__form');
+const sliderContainer = form.querySelector('.img-upload__effect-level');
+const slider = form.querySelector('.effect-level__slider');
+const effectsButtons = form.querySelectorAll('.effects__radio');
+const effectsButtonNone = form.querySelector('#effect-none');
+const imgUploadPreview = form.querySelector('.img-upload__preview img');
+const effectValue = form.querySelector('.effect-level__value');
+const scaleControlValue = form.querySelector('.scale__control--value');
+const buttonSmaller = form.querySelector('.scale__control--smaller');
+const buttonBigger = form.querySelector('.scale__control--bigger');
 const sliderSettings = getSliderSettings();
 const scaleSettings = getScaleSettings();
 const effectsSettings = getEffectsSettings();

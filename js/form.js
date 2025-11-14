@@ -18,10 +18,10 @@ const effectItem = document.querySelectorAll('.effects__preview');
 const FILE_TYPES = ['gif', 'jpg', 'jpeg', 'png', 'webp'];
 
 const setFormAttributes = () => {
-  form.setAttribute('autocomplete', 'off');
-  form.setAttribute('method', 'post');
-  form.setAttribute('enctype', 'multipart/form-data');
-  form.setAttribute('action', 'https://31.javascript.htmlacademy.pro/kekstagram');
+  form.autocomplete = 'off';
+  form.method = 'post';
+  form.enctype = 'multipart/form-data';
+  form.action = 'https://31.javascript.htmlacademy.pro/kekstagram';
 };
 
 const closeForm = () => {
@@ -101,7 +101,6 @@ const formSubmit = async (event) => {
     }
   }
 };
-
 
 form.addEventListener('submit', (event) => {
   event.preventDefault();
