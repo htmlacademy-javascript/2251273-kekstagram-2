@@ -25,8 +25,6 @@ const resetComments = () => {
 };
 
 const renderComment = (comment) => {
-  const fragment = document.createDocumentFragment();
-
   const commentItem = document.createElement('li');
   commentItem.classList.add('social__comment');
 
@@ -43,16 +41,14 @@ const renderComment = (comment) => {
   commentItem.appendChild(commentPicture);
   commentItem.appendChild(commentText);
 
-  fragment.appendChild(commentItem);
-
   return commentItem;
-
 };
 
 const showComments = () => {
-  const visibleComments = Comments.DATA.slice((Comments.SHOW % Comments.STEP) ? (Comments.SHOW - Comments.SHOW % Comments.STEP) : Comments.SHOW - Comments.STEP , Comments.SHOW);
+  const remains = Comments.SHOW % Comments.STEP;
+  const visibleComments = Comments.DATA.slice((remains) ? (Comments.SHOW - remains) : Comments.SHOW - Comments.STEP , Comments.SHOW);
   const fragment = document.createDocumentFragment();
-  visibleComments.forEach((item) => {
+  visibleComments?.forEach((item) => {
     fragment.appendChild(renderComment(item));
   });
   socialommentsList.appendChild(fragment);

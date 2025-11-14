@@ -52,7 +52,7 @@ const hashtagsValidator = (value) => {
   } else if (hashtagsArray.length > Limit.HASHTAGS_MAX) {
     return {
       valid: false,
-      message: 'Максимум 5 хэштегов!',
+      message: `Максимальное количество хэштегов ${Limit.HASHTAGS_MAX}!`,
     };
   } else {
     return {
@@ -66,7 +66,7 @@ const descriptionValidator = (value) => {
   if (value.length > Limit.DESCRIPTION) {
     return {
       valid: false,
-      message: 'Длина описания не должна превышать 140 символов!',
+      message: `Длина описания не должна превышать ${Limit.DESCRIPTION} символов!`,
     };
   } else {
     return {

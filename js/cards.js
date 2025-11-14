@@ -5,8 +5,6 @@ const сardsСontainer = document.querySelector('.pictures');
 const cardTemplate = document.querySelector('#picture').content.querySelector('.picture');
 
 const renderCard = (card) => {
-  const fragment = document.createDocumentFragment();
-
   const cardElement = cardTemplate.cloneNode(true);
   const cardPicture = cardElement.querySelector('.picture__img');
   const cardComments = cardElement.querySelector('.picture__comments');
@@ -23,14 +21,12 @@ const renderCard = (card) => {
     openBigPicture(card);
   });
 
-  fragment.appendChild(cardElement);
-
-  return fragment;
+  return cardElement;
 };
 
 const clearCards = () => {
   const cards = document.querySelectorAll('.picture');
-  cards.forEach((card) => {
+  cards?.forEach((card) => {
     card.remove();
   });
 };
@@ -39,7 +35,7 @@ const renderCards = (cards) => {
   const fragment = document.createDocumentFragment();
   showFilter();
 
-  cards.forEach((element) => {
+  cards?.forEach((element) => {
     fragment.appendChild(renderCard(element));
   });
 
